@@ -1,0 +1,37 @@
+# this saves parflow and CLM outputs as .vtks, a convenient format with which to visualize your data
+
+# Import the ParFlow TCL package
+lappend auto_path $env(PARFLOW_DIR)/bin 
+package require parflow
+namespace import Parflow::*
+pfset FileVersion 4
+
+cd "../run_dir"
+
+#you will need to have a DEM of your domain in .pfb format on hand
+set DEMdat [pfload -pfb ../parflow_input/LW.dem.pfb]
+
+#Loop through the timesteps you want converted. 
+set start 1
+set end 24
+set increment 1 
+set runname "LW"
+
+set dzlist "2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0"
+
+for {set j $start} {$j <= $end} {incr j $increment} {
+	set Pfile [format $runname.out.press.%05d.pfb $j]
+	set Pdat [pfload -pfb $Pfile] 
+	set fout_vtk [format $runname.out.press.%05d.vtk $j] 
+	set test [pfgetgrid $Pdat]
+	#puts $test
+	pfvtksave $Pdat -vtk $fout_vtk -var "Press" -dem $DEMdat -flt 
+	
+	#-tfg $dzlist
+	
+
+	#set Cfile [format $runname.out.clm_output.%05d.C.pfb $j]
+	#set Cdat [pfload -pfb $Cfile]
+	#set fout_vtk [format $runname.out.CLM.%05d.vtk $j]
+	#pfvtksave $Cdat -clmvtk $fout_vtk -dem $DEMdat -flt -tfg $dzlist
+}
