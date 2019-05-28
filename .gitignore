@@ -1,4 +1,5 @@
 Exercises/parflow_input/*.dist
+Exercises/.DS_Store
 Exercises/overland/heterog
 Exercises/overland/horton_over
 Exercises/overland/dunne_over
