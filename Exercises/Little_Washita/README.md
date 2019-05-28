@@ -1,6 +1,6 @@
 Little Washita PF-CLM Watershed Examples
 =======
-This folder contains run scripts and inputs to run the Little Washita test domain including examples for a parking lot test, spinup and runing and restarting with ParFlow-CLM. The examples are setup to be run in order and walk through the steps of building a ParFlow-CLM model. A list of contents is provided below but its recommended that you refer to the ***Exercise Instructions*** below to walk through the materials contained here.  
+This folder contains run scripts and inputs to run the Little Washita test domain including examples for a parking lot test, spinup and running and restarting with ParFlow-CLM. The examples are setup to be run in order and walk through the steps of building a ParFlow-CLM model. A list of contents is provided below but its recommended that you refer to the ***Exercise Instructions*** below to walk through the materials contained here.  
 
 Contents
 --------------------
@@ -39,7 +39,7 @@ Input files for clm:
 
 Naming Convention: `NLDAS.variablename.starthour_to_endhour.extension`
 
-File types: Forcings are provided in both ParFlow formatted *.sa* files and *.pfb* files. The *.pfb.dist* file are the distributed versions of the forcings needed to run on multiple processors. **NOTE:** Files are currently distributed to run on one processor. If you want to run on more cores you should run  `PrePost_Processing\Dist_Forcings.tcl` to redistribute the forcings before you do your model run.
+File types: Forcings are provided in both ParFlow formatted *.sa* files and *.pfb* files. The *.pfb.dist* file are the distributed versions of the forcings needed to run on multiple processors. **NOTE:** Files are currently distributed to run on one processor. If you want to run on more cores you should run  `PrePost_Processing/Dist_Forcings.tcl` to redistribute the forcings before you do your model run.
 
 Variables:
 - APCP: Precipitation rate [mm/s]
@@ -64,18 +64,19 @@ Exercises
 
 ___
 ### Exercise 2: Parking lot Test
-This will run a parkinglot test.
+This exercise will walk through a parking lot test for testing overland flow.
 
-1. Before you run the model walk through the script and answer the following:
-- How many time steps will this run for?:
-- What is the hydraulic conductivity?:
-- Is the subsurface homogeneous or heterogeneous?:
-- How hard is it going to rain? And for how long?:
-- What are the boundary conditions of the model?:
+1. Before you run the model, walk through the run script `LW_Exercise2.tcl` and answer the following:
+  - How many time steps will this run for?
+  - What is the hydraulic conductivity?
+  - Is the subsurface homogeneous or heterogeneous?
+  - How hard is it going to rain? And for how long?
+  - What are the boundary conditions of the model?
+  - Where are the outputs going to be written to?
 
+1.	Run the simulation: `tclsh LW_Exercise2.tcl`
+  - You should be able to see outputs being written to your new Exercise2 folder and you can also track the progress by looking at the  *.kinsol.log* file
 
-Now you are ready to run theInitial Run:
-1.	Run the tcl script  LW_Exercise2.tcl
 2.	Look at the pressure file outputs in visit:
 ```
 •	File - Open
@@ -83,10 +84,14 @@ Now you are ready to run theInitial Run:
 •	Double click on the Pseudocolor to get the plot options. Change the min to 0 and the max to 0.05. Apply and Dismiss.
 •	Use the time slider to advance through the simulation.
 ```
-3.	Use PFTools to calculate the flow at the outlet using `Flow_Calculation.tcl`
-4.	Copy `flow_out.txt` into excel or open in R and plot the time series
 
-Additional Exercises:
+3.	Use PFTools to calculate the flow at the outlet using `PrePost_Processing/Flow_Calculation.tcl`
+  - Change the run name, output directory and number of timesteps to process in the top of the script
+  - `tclsh Flow_Calculation.tcl`
+
+4.	Copy `flow_out.txt` that was created in step 3 into excel or open in R and plot the time series
+
+###### Additional Tests to Run:
 1.	Change the run time, rainfall timing and magnitude
 2.	Change `Flow_Calculation.tcl` to look at the flow in alternate locations
 3.  Use the *set* command to set the slopex and slopey file names in the top of the tcl script. Then modify the rest of the script to refer to these new variables rather than using the complete file path.
