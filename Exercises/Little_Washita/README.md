@@ -118,18 +118,19 @@ This exercise will walk through the process of 'spinning up' a ParFlow simulatio
 ```
 tclsh LW_Exercise3.tcl
 ```
-. Look at the outputs from the spinup as they are written to see how the pressure field changes and look at the *kinsol.log* file to see how the model is converging.
+Look at the outputs from the spinup as they are written to see how the pressure field changes and look at the *kinsol.log* file to see how the model is converging.
 
 4. Now we will run the second part of the spinup starting from our solution from Step 2 and turning overland flow on. If you have time, you should let the model from step 2 continue running until you have a steady state groundwater configuration, and use the final pressure file from that run as your initial condition for the this step. For now though, you can jump ahead and use the pressure file provided: `parflow_input/press.init.pfb`. In the tcl script you will need to change the following:
    -	turn off the overland flow spinup flag
-   - Change the initial condition so it reads the press.init.pfb file
+   - Change the initial condition so it reads the *press.init.pfb file*
    - Change the runname of your simulation
-Then run the simulation: `tclsh LW_Exercise3.tcl`
+Then run the simulation and look at the outputs
+```
+tclsh LW_Exercise3.tcl
+```
+###### Additional Tests to Run:
+-	 Modify the Flow_Calculation.tcl scrip to create a timeseries of flow at the outlet and plot
 
-
--	Run the LW_SpinupTest.tcl
--	Look at the outputs
--	Modify the Flow_Calculation.tcl scrip to create a timeseries of flow at the outlet and plot
 ____
 ### Exercise 4: Running and restarting ParFlow-CLM
 1.	Decide on your processor topology:
