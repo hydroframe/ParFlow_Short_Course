@@ -1,10 +1,15 @@
-#  This runs the tilted-v catchment problem
-#  similar to that in Kollet and Maxwell (2006) AWR
+#  This TCL script runs a Dunne flow example
+# using ParFlow. It is configured to run using the orthagonal grid
+# using a PFSOLID file and to output total runoff.  It is set up to have
+# correlated, random fields for the hydraulic conductivity
+
+# R. Maxwell, originally developed in 2009, updated PF Short Course 2019
+
 
 #
 # Import the ParFlow TCL package
 #
-lappend auto_path $env(PARFLOW_DIR)/bin 
+lappend auto_path $env(PARFLOW_DIR)/bin
 package require parflow
 namespace import Parflow::*
 
@@ -30,7 +35,7 @@ pfset ComputationalGrid.DY               1.0
 pfset ComputationalGrid.DZ	            .05
 
 #---------------------------------------------------------
-# Domain Geometry 
+# Domain Geometry
 #---------------------------------------------------------
 pfset GeomInput.Names                 "solidinput1"
 
@@ -132,7 +137,7 @@ pfset Gravity				1.0
 #-----------------------------------------------------------------------------
 
 # run for 2 hours @ 6min timesteps
-# 
+#
 pfset TimingInfo.BaseUnit        1.0
 pfset TimingInfo.StartCount      0
 pfset TimingInfo.StartTime       0.0
@@ -140,7 +145,7 @@ pfset TimingInfo.StopTime        3.0
 pfset TimingInfo.DumpInterval    -1
 pfset TimeStep.Type              Constant
 pfset TimeStep.Value             0.05
- 
+
 #-----------------------------------------------------------------------------
 # Porosity
 #-----------------------------------------------------------------------------
@@ -165,7 +170,7 @@ pfset Phase.RelPerm.Type               VanGenuchten
 pfset Phase.RelPerm.GeomNames          "domain"
 
 pfset Geom.domain.RelPerm.Alpha         6.0
-pfset Geom.domain.RelPerm.N             2. 
+pfset Geom.domain.RelPerm.N             2.
 
 #---------------------------------------------------------
 # Saturation
@@ -201,7 +206,7 @@ pfset Cycle.rainrec.Names                 "rain rec"
 pfset Cycle.rainrec.rain.Length           2
 pfset Cycle.rainrec.rec.Length            2
 pfset Cycle.rainrec.Repeat                -1
- 
+
 #-----------------------------------------------------------------------------
 # Boundary Conditions: Pressure
 #-----------------------------------------------------------------------------
@@ -251,7 +256,7 @@ pfset TopoSlopesY.GeomNames "domain"
 pfset TopoSlopesY.Geom.domain.Value 0.00
 
 #---------------------------------------------------------
-# Mannings coefficient 
+# Mannings coefficient
 #---------------------------------------------------------
 
 pfset Mannings.Type "Constant"
@@ -282,10 +287,10 @@ pfset Solver.MaxIter                                     2500
 
 pfset Solver.Nonlinear.MaxIter                           300
 pfset Solver.Nonlinear.ResidualTol                       1e-6
-pfset Solver.Nonlinear.EtaChoice                         Walker1 
+pfset Solver.Nonlinear.EtaChoice                         Walker1
 #pfset Solver.Nonlinear.EtaChoice                         EtaConstant
 pfset Solver.Nonlinear.EtaValue                          0.001
-pfset Solver.Nonlinear.UseJacobian                       True 
+pfset Solver.Nonlinear.UseJacobian                       True
 pfset Solver.Nonlinear.DerivativeEpsilon                 1e-16
 pfset Solver.Nonlinear.StepTol				 1e-20
 pfset Solver.Nonlinear.Globalization                     LineSearch
@@ -300,7 +305,7 @@ pfset Solver.Linear.Preconditioner.MGSemi.MaxLevels      10
 pfset Solver.PrintSubsurf				False
 pfset  Solver.Drop                                      1E-20
 pfset Solver.AbsTol                                     1E-12
- 
+
 pfset Solver.WriteSiloSubsurfData True
 pfset Solver.WriteSiloPressure True
 pfset Solver.WriteSiloSaturation True
@@ -319,7 +324,7 @@ pfset Solver.WriteSiloSpecificStorage                   True
 # set water table to be at the bottom of the domain, the top layer is initially dry
 pfset ICPressure.Type                                   HydroStaticPatch
 pfset ICPressure.GeomNames                              domain
-pfset Geom.domain.ICPressure.Value                      -2.0 
+pfset Geom.domain.ICPressure.Value                      -2.0
 
 pfset Geom.domain.ICPressure.RefGeom                    domain
 pfset Geom.domain.ICPressure.RefPatch                   z-upper
@@ -328,7 +333,7 @@ pfset Geom.domain.ICPressure.RefPatch                   z-upper
 # Run and Unload the ParFlow output files
 #-----------------------------------------------------------------------------
 
-file mkdir heterog-dunne  
+file mkdir heterog-dunne
 cd heterog-dunne
 
 pfrun heterog-dunne
