@@ -22,6 +22,7 @@ pfset Process.Topology.R 1
 file mkdir Exercise4
 cd Exercise4
 set runname "LW_CLM"
+pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb 
 
 #-----------------------------------------------------------------------------
 # Make a directory for the simulation and copy inputs into it

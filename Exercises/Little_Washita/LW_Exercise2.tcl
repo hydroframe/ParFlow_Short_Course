@@ -13,6 +13,7 @@ pfset     FileVersion    4
 file mkdir Exercise2
 cd Exercise2
 set runname "LW_ParkingLot"
+pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb 
 
 #-----------------------------------------------------------------------------
 # Set Processor topology

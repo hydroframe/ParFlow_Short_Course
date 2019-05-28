@@ -15,6 +15,7 @@ pfset     FileVersion    4
 file mkdir Exercise3
 cd Exercise3
 set runname "LW_Spinup"
+pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb 
 
 #-----------------------------------------------------------------------------
 # Set Processor topology

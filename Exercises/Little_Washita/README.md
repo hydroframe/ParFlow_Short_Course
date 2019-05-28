@@ -134,7 +134,7 @@ tclsh LW_Exercise3.tcl
 - Try re-running Steps 2 or 3 using one of the outputs you generated in Step 2
 
 ____
-### Exercise 4: Running and restarting ParFlow-CLM
+### Exercise 4: Running ParFlow-CLM
 Now that you have a spunup ParFlow model it is time to run ParFlow-CLM
 
 1. Before you run the model, walk through the run script `LW_Exercise4.tcl` and answer the following:
@@ -160,10 +160,13 @@ tclsh LW_Exercise4.tcl
 
 4.	Look at outputs in Visit. Note that in addition to pressure and saturation there are all of the additional CLM output variables to look at.
 
-5.	Calculate the water balance components and the flow at the outlet using `PrePost_Processing/Calc_Water_Blance.tcl` and `PrePost_Processing/Flow_Calculation.tcl`. Use R or excel to look at the text outputs and look at the silos of water table depth in Visit.
+5.	Calculate the water balance components and the flow at the outlet using `PrePost_Processing/Calc_Water_Blance.tcl` and `PrePost_Processing/Flow_Calculation.tcl`. Don't forget to change your run directory and runname in these scripts before you run. Use R or excel to look at the text outputs and look at the silos of water table depth in Visit.
 
-6.	Make VTKs out of the outputs using VTK_example.tcl and experiment with visualizations in Visit
+6.	Make VTKs out of the outputs using `PrePost_Processing/VTK_example.tcl` and experiment with visualizations in Visit
 
+____
+### Exercise 5: Restarting ParFlow-CLM
+N
 Restarting:
 Restart the run from where it left off. Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the tcl script:
 •	 TimingInfo.StartCount               19.0
