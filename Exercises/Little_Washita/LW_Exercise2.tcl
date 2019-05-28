@@ -8,7 +8,14 @@ namespace import Parflow::*
 pfset     FileVersion    4
 
 #-----------------------------------------------------------------------------
-# Set Processor topology 
+# Setup run name and location
+#-----------------------------------------------------------------------------
+file mkdir Exercise2
+cd Exercise2
+set runname "LW_ParkingLot"
+
+#-----------------------------------------------------------------------------
+# Set Processor topology
 #-----------------------------------------------------------------------------
 pfset Process.Topology.P 1
 pfset Process.Topology.Q 1
@@ -19,15 +26,15 @@ pfset Process.Topology.R 1
 #-----------------------------------------------------------------------------
 pfset ComputationalGrid.Lower.X           0.0
 pfset ComputationalGrid.Lower.Y           0.0
-pfset ComputationalGrid.Lower.Z           0.0 
+pfset ComputationalGrid.Lower.Z           0.0
 
 pfset ComputationalGrid.DX                1000.0
 pfset ComputationalGrid.DY                1000.0
 pfset ComputationalGrid.DZ                2.0
 
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
-pfset ComputationalGrid.NZ                50  
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
+pfset ComputationalGrid.NZ                50
 
 
 #-----------------------------------------------------------------------------
@@ -42,12 +49,12 @@ pfset GeomInput.box_input.InputType      Box
 pfset GeomInput.box_input.GeomName      domain
 
 #-----------------------------------------------------------------------------
-# Domain Geometry 
+# Domain Geometry
 #-----------------------------------------------------------------------------
 pfset Geom.domain.Lower.X                        0.0
 pfset Geom.domain.Lower.Y                        0.0
 pfset Geom.domain.Lower.Z                        0.0
- 
+
 pfset Geom.domain.Upper.X                        41000.0
 pfset Geom.domain.Upper.Y                        41000.0
 pfset Geom.domain.Upper.Z                          100.0
@@ -59,7 +66,7 @@ pfset Geom.domain.Patches             "x-lower x-upper y-lower y-upper z-lower z
 pfset Geom.Perm.Names                     "domain"
 
 pfset Geom.domain.Perm.Type           Constant
-pfset Geom.domain.Perm.Value          0.000001 
+pfset Geom.domain.Perm.Value          0.000001
 
 pfset Perm.TensorType                     TensorByGeom
 pfset Geom.Perm.TensorByGeom.Names        "domain"
@@ -212,14 +219,14 @@ pfset Patch.z-upper.BCPressure.rec.Value	      0.00000
 #-----------------------------------------------------------------------------
 pfset TopoSlopesX.Type                                "PFBFile"
 pfset TopoSlopesX.GeomNames                           "domain"
-pfset TopoSlopesX.FileName                            "LW.slopex.pfb"
+pfset TopoSlopesX.FileName                            "../parflow_input/LW.slopex.pfb"
 
 #-----------------------------------------------------------------------------
 # Topo slopes in y-direction
 #-----------------------------------------------------------------------------
 pfset TopoSlopesY.Type                                "PFBFile"
 pfset TopoSlopesY.GeomNames                           "domain"
-pfset TopoSlopesY.FileName                            "LW.slopey.pfb"
+pfset TopoSlopesY.FileName                            "../parflow_input/LW.slopey.pfb"
 
 #-----------------------------------------------------------------------------
 # Phase sources:
@@ -262,7 +269,7 @@ pfset Solver.Nonlinear.MaxIter                        80
 pfset Solver.Nonlinear.ResidualTol                    1e-6
 pfset Solver.Nonlinear.EtaChoice                      EtaConstant
 pfset Solver.Nonlinear.EtaValue                       0.001
-pfset Solver.Nonlinear.UseJacobian                    True 
+pfset Solver.Nonlinear.UseJacobian                    True
 pfset Solver.Nonlinear.DerivativeEpsilon              1e-16
 pfset Solver.Nonlinear.StepTol				 		  1e-30
 pfset Solver.Nonlinear.Globalization                  LineSearch
@@ -280,19 +287,18 @@ pfset Solver.WriteSiloSlopes      					  True
 #-----------------------------------------------------------------------------
 # Distribute inputs
 #-----------------------------------------------------------------------------
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
 pfset ComputationalGrid.NZ                1
-pfdist LW.slopex.pfb
-pfdist LW.slopey.pfb
+pfdist ../parflow_input/LW.slopex.pfb
+pfdist ../parflow_input/LW.slopey.pfb
 
-pfset ComputationalGrid.NZ                50 
+pfset ComputationalGrid.NZ                50
 
 
 #-----------------------------------------------------------------------------
-# Run Simulation 
+# Run Simulation
 #-----------------------------------------------------------------------------
-set runname "LW_ParkingLot"
 puts $runname
 pfrun    $runname
 
@@ -300,10 +306,8 @@ pfrun    $runname
 # Undistribute outputs
 #-----------------------------------------------------------------------------
 pfundist $runname
-pfundist LW.slopex.pfb
-pfundist LW.slopey.pfb
+pfundist ../parflow_input/LW.slopex.pfb
+pfundist ../parflow_input/LW.slopey.pfb
 
 
 puts "ParFlow run Complete"
-
-

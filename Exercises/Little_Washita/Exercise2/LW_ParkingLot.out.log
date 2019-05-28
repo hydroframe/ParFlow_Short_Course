@@ -1,0 +1,143 @@
+*****************************************************************************
+ParFlow Output Log
+	Version        : v3.3.1-33-g30e9d2e
+	Compiled on    : May 16 2019 10:37:43
+*****************************************************************************
+==============================================
+BEGIN Log Info (SolverRichards)
+
+Transient Problem Solved.
+-------------------------
+
+Total Timesteps: 20
+
+-------------------------
+Sequence #       Time         \Delta t         Dumpfile #   Recompute?
+----------   ------------   ------------ -     ----------   ----------
+  000000     0.000000e+00   0.000000e+00 i       000000          n
+  000001     1.000000e+00   1.000000e+00 p       000001          y
+  000002     2.000000e+00   1.000000e+00 p       000002          y
+  000003     3.000000e+00   1.000000e+00 p       000003          y
+  000004     4.000000e+00   1.000000e+00 p       000004          y
+  000005     5.000000e+00   1.000000e+00 p       000005          y
+  000006     6.000000e+00   1.000000e+00 p       000006          y
+  000007     7.000000e+00   1.000000e+00 p       000007          y
+  000008     8.000000e+00   1.000000e+00 p       000008          y
+  000009     9.000000e+00   1.000000e+00 p       000009          y
+  000010     1.000000e+01   1.000000e+00 p       000010          y
+  000011     1.100000e+01   1.000000e+00 p       000011          y
+  000012     1.200000e+01   1.000000e+00 p       000012          y
+  000013     1.300000e+01   1.000000e+00 p       000013          y
+  000014     1.400000e+01   1.000000e+00 p       000014          y
+  000015     1.500000e+01   1.000000e+00 p       000015          y
+  000016     1.600000e+01   1.000000e+00 p       000016          y
+  000017     1.700000e+01   1.000000e+00 p       000017          y
+  000018     1.800000e+01   1.000000e+00 p       000018          y
+  000019     1.900000e+01   1.000000e+00 p       000019          y
+  000020     2.000000e+01   1.000000e+00 f       000020          y
+
+Overland flow Results
+  000000     0.000000e+00   0.000000e+00
+  000001     1.000000e+00   1.000000e+00
+  000002     2.000000e+00   1.000000e+00
+  000003     3.000000e+00   1.000000e+00
+  000004     4.000000e+00   1.000000e+00
+  000005     5.000000e+00   1.000000e+00
+  000006     6.000000e+00   1.000000e+00
+  000007     7.000000e+00   1.000000e+00
+  000008     8.000000e+00   1.000000e+00
+  000009     9.000000e+00   1.000000e+00
+  000010     1.000000e+01   1.000000e+00
+  000011     1.100000e+01   1.000000e+00
+  000012     1.200000e+01   1.000000e+00
+  000013     1.300000e+01   1.000000e+00
+  000014     1.400000e+01   1.000000e+00
+  000015     1.500000e+01   1.000000e+00
+  000016     1.600000e+01   1.000000e+00
+  000017     1.700000e+01   1.000000e+00
+  000018     1.800000e+01   1.000000e+00
+  000019     1.900000e+01   1.000000e+00
+  000020     2.000000e+01   1.000000e+00
+
+END Log Info
+==============================================
+==============================================
+BEGIN Log Info (Globals)
+
+Run Name: LW_ParkingLot
+Logging Level = 1
+Num processes = 1
+Process grid = (1,1,1)
+
+END Log Info
+==============================================
+==============================================
+BEGIN Log Info (Timing)
+
+Solver Setup:
+  wall clock time   = 0.033500 seconds
+  wall MFLOPS = 0.000000 (0)
+Solver:
+  wall clock time   = 29.843800 seconds
+  wall MFLOPS = 64.499615 (1.92491e+09)
+Solver Cleanup:
+  wall clock time   = 0.012200 seconds
+  wall MFLOPS = 0.000000 (0)
+Matvec:
+  wall clock time   = 0.971600 seconds
+  wall MFLOPS = 718.352408 (6.97951e+08)
+PFSB I/O:
+  wall clock time   = 0.000000 seconds
+  wall MFLOPS = 0.000000 (0)
+PFB I/O:
+  wall clock time   = 0.610000 seconds
+  wall MFLOPS = 0.000000 (0)
+CLM:
+  wall clock time   = 0.000500 seconds
+  wall MFLOPS = 0.000000 (0)
+PFSOL Read:
+  wall clock time   = 0.000000 seconds
+  wall MFLOPS = 0.000000 (0)
+Permeability Face:
+  wall clock time   = 0.000000 seconds
+  wall MFLOPS = 0.000000 (0)
+Godunov Advection:
+  wall clock time   = 0.000000 seconds
+  wall MFLOPS = 0.000000 (0)
+Geometries:
+  wall clock time   = 0.028100 seconds
+  wall MFLOPS = 0.000000 (0)
+SubsrfSim:
+  wall clock time   = 0.004300 seconds
+  wall MFLOPS = 0.000000 (0)
+Porosity:
+  wall clock time   = 0.001300 seconds
+  wall MFLOPS = 0.000000 (0)
+PhaseRelPerm:
+  wall clock time   = 7.699700 seconds
+  wall MFLOPS = 0.000065 (500)
+PFMG:
+  wall clock time   = 1.735200 seconds
+  wall MFLOPS = 0.000000 (0)
+HYPRE_Copies:
+  wall clock time   = 2.216100 seconds
+  wall MFLOPS = 0.000000 (0)
+NL_F_Eval:
+  wall clock time   = 7.097000 seconds
+  wall MFLOPS = 0.000020 (140)
+KINSol:
+  wall clock time   = 28.944800 seconds
+  wall MFLOPS = 66.502916 (1.92491e+09)
+
+END Log Info
+==============================================
+==============================================
+BEGIN Log Info (ParFlow Total Time)
+
+Total Run Time: 29.907800 seconds
+
+
+
+
+END Log Info
+==============================================
