@@ -55,7 +55,7 @@ set porosity            [pfload $runname.out.porosity.pfb]
 set top                 [pfcomputetop $mask]
 set mannings            [pfload $runname.out.mannings.silo]
 set sx                  [pfload LW.slopex.pfb]
-set sy                  [pfload LW.slopey.pfb]   
+set sy                  [pfload LW.slopey.pfb]
 
 for {set i 1} {$i <=$timesteps } {incr i} {
     # Read in inputs
@@ -65,7 +65,7 @@ for {set i 1} {$i <=$timesteps } {incr i} {
     set saturation [pfload $fin]
 
 
-    # Calculate water balance 
+    # Calculate water balance
     set water_table_depth [pfwatertabledepth $top $saturation]
     set subsurface_storage [pfsubsurfacestorage $mask $porosity $pressure $saturation $specific_storage]
     set total_subsurface_storage [pfsum $subsurface_storage]
@@ -81,18 +81,13 @@ for {set i 1} {$i <=$timesteps } {incr i} {
     puts $file_summary "$i\t $total_subsurface_storage\t $total_surface_storage\t $total_surface_runoff\t $ET_sum\t"
 
     #Calculate the water table depth
-    set water_table_depth [pfwatertabledepth $top $saturation] 
+    set water_table_depth [pfwatertabledepth $top $saturation]
     set fout_silo [format WTD.%03d.silo $i]
     pfsave $water_table_depth  -silo $fout_silo
-    
+
     # Clear Variables
     pfdelete $pressure
     pfdelete $saturation
-    pfdelete $water_table_depth  
+    pfdelete $water_table_depth
 
 }
-
-
-
-
-

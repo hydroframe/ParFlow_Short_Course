@@ -279,6 +279,10 @@ pfset Solver.Linear.MaxRestarts                       2
 pfset Solver.Linear.Preconditioner                    PFMG
 pfset Solver.Linear.Preconditioner.PCMatrixType       FullJacobian
 
+pfset Solver.PrintMannings                                True
+pfset Solver.PrintPressure                            True
+pfset Solver.PrintSaturation                          True
+pfset Solver.PrintMask                                True
 pfset Solver.WriteSiloSubsurfData 					  True
 pfset Solver.WriteSiloPressure 						  True
 pfset Solver.WriteSiloSaturation 					  True

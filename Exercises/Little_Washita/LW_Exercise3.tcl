@@ -424,10 +424,10 @@ pfset Solver.WriteSiloMannings                        True
 pfset Solver.PrintCLM                                 True
 
 
-
-#pfset Solver.PrintPressure                            True
-#pfset Solver.PrintSaturation                          True
-#pfset Solver.PrintMask                                True
+pfset Solver.PrintMannings                                True
+pfset Solver.PrintPressure                            True
+pfset Solver.PrintSaturation                          True
+pfset Solver.PrintMask                                True
 #pfset Solver.PrintCLM                                 True
 #pfset Solver.WriteSiloSpecificStorage                 False
 #pfset Solver.WriteSiloMannings                        False
@@ -467,6 +467,7 @@ pfset Solver.Nonlinear.StepTol				 			1e-30
 pfset Solver.Nonlinear.Globalization                     LineSearch
 pfset Solver.Linear.KrylovDimension                      70
 pfset Solver.Linear.MaxRestarts                           2
+
 
 pfset Solver.Linear.Preconditioner                       PFMG
 pfset Solver.Linear.Preconditioner.PCMatrixType     FullJacobian

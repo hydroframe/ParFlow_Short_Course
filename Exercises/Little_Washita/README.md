@@ -97,10 +97,10 @@ tclsh Flow_Calculation.tcl
 5.	Copy `flow_out.txt` that was created in step 3 into excel or open in R and plot the time series
 
 ###### Additional Tests to Run:
-1.	Change the run time, rainfall timing and magnitude
-2.	Change `Flow_Calculation.tcl` to look at the flow in alternate locations
-3.  Use the *set* command to set the slopex and slopey file names in the top of the tcl script. Then modify the rest of the script to refer to these new variables rather than using the complete file path.
-4.	Change the slope at the outlet of the domain and see how this changes the simulation (Hint: to do this you can convert your pfb slopes to text files using File_Conversion.tcl and manually change values. The outlet of the domain is at x=40, y=31)  
++	Change the run time, rainfall timing and magnitude
++	Change `Flow_Calculation.tcl` to look at the flow in alternate locations
++  Use the *set* command to set the slopex and slopey file names in the top of the tcl script. Then modify the rest of the script to refer to these new variables rather than using the complete file path.
++	Change the slope at the outlet of the domain and see how this changes the simulation (Hint: to do this you can convert your pfb slopes to text files using File_Conversion.tcl and manually change values. The outlet of the domain is at x=40, y=31)  
 
 ___
 ### Exercise 3: Spinup
@@ -160,7 +160,7 @@ tclsh LW_Exercise4.tcl
 
 4.	Look at outputs in Visit. Note that in addition to pressure and saturation there are all of the additional CLM output variables to look at.
 
-5.	Calculate the water balance components and the flow at the outlet using Calc_Water_Blance.tcl and Flow_Calculation.tcl. Use R or excel to look at the text outputs and look at the silos of water table depth in Visit.
+5.	Calculate the water balance components and the flow at the outlet using `PrePost_Processing/Calc_Water_Blance.tcl` and `PrePost_Processing/Flow_Calculation.tcl`. Use R or excel to look at the text outputs and look at the silos of water table depth in Visit.
 
 6.	Make VTKs out of the outputs using VTK_example.tcl and experiment with visualizations in Visit
 

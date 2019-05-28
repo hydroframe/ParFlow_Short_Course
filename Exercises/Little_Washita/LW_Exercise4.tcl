@@ -455,7 +455,8 @@ pfset Solver.PrintCLM                                 True
 #pfset Solver.PrintSaturation                          True
 pfset Solver.PrintMask                                True
 pfset Solver.WriteSiloMask                            True
-#pfset Solver.PrintCLM                                 True
+pfset Solver.PrintMannings                                True
+pfset Solver.PrintCLM                                 True
 #pfset Solver.WriteSiloSpecificStorage                 False
 #pfset Solver.WriteSiloMannings                        False
 #pfset Solver.WriteSiloSubsurfData                     False
