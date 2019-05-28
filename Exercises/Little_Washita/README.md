@@ -166,7 +166,6 @@ tclsh LW_Exercise4.tcl
 
 ____
 ### Exercise 5: Restarting ParFlow-CLM
-N
 Restarting:
 Restart the run from where it left off. Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the tcl script:
 •	 TimingInfo.StartCount               19.0
