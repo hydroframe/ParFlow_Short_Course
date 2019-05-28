@@ -11,6 +11,8 @@ namespace import Parflow::*
 
 pfset FileVersion 4
 
+# running in serial
+
 pfset Process.Topology.P 1
 pfset Process.Topology.Q 1
 pfset Process.Topology.R 1
@@ -26,9 +28,9 @@ pfset ComputationalGrid.NX                20
 pfset ComputationalGrid.NY                1
 pfset ComputationalGrid.NZ                300
 
-pfset ComputationalGrid.DX	         5.0
-pfset ComputationalGrid.DY               1.0
-pfset ComputationalGrid.DZ	            .05
+pfset ComputationalGrid.DX                5.0
+pfset ComputationalGrid.DY                1.0
+pfset ComputationalGrid.DZ                 .05
 
 #---------------------------------------------------------
 # Domain Geometry
@@ -38,6 +40,10 @@ pfset GeomInput.Names                 "solidinput1"
 pfset GeomInput.solidinput1.InputType  SolidFile
 pfset GeomInput.solidinput1.GeomNames  domain
 pfset GeomInput.solidinput1.FileName   ../stormflow.pfsol
+
+# notes: loads the PFSOLID file from one directory above the one PF runs in;
+# Note the patch order is important and must match the patch order in the solid
+# file
 
 
 pfset Geom.domain.Patches             "z-upper x-lower y-lower \
@@ -51,7 +57,6 @@ pfset Geom.Perm.Names                 "domain"
 
 # Values in m/hour
 #
-
 pfset Geom.domain.Perm.Type            Constant
 pfset Geom.domain.Perm.Value           10.
 
@@ -77,17 +82,18 @@ pfset Geom.domain.SpecificStorage.Value 1.0e-5
 
 pfset Phase.Names "water"
 
-pfset Phase.water.Density.Type	        Constant
-pfset Phase.water.Density.Value	        1.0
+pfset Phase.water.Density.Type          Constant
+pfset Phase.water.Density.Value         1.0
 
-pfset Phase.water.Viscosity.Type	Constant
-pfset Phase.water.Viscosity.Value	1.0
+pfset Phase.water.Viscosity.Type        Constant
+pfset Phase.water.Viscosity.Value       1.0
 
 #-----------------------------------------------------------------------------
 # Contaminants
 #-----------------------------------------------------------------------------
 
-pfset Contaminants.Names			""
+## a blank string means no Contaminants
+pfset Contaminants.Names    ""
 
 #-----------------------------------------------------------------------------
 # Retardation
@@ -186,9 +192,9 @@ pfset Cycle.rainrec.Repeat                -1
 pfset BCPressure.PatchNames                   "z-upper x-lower y-lower \
                                       x-upper y-upper z-lower"
 
-pfset Patch.x-lower.BCPressure.Type		      FluxConst
-pfset Patch.x-lower.BCPressure.Cycle		      "constant"
-pfset Patch.x-lower.BCPressure.alltime.Value	      0.0
+pfset Patch.x-lower.BCPressure.Type           FluxConst
+pfset Patch.x-lower.BCPressure.Cycle          "constant"
+pfset Patch.x-lower.BCPressure.alltime.Value    0.0
 
 pfset Patch.y-lower.BCPressure.Type		      FluxConst
 pfset Patch.y-lower.BCPressure.Cycle		      "constant"
@@ -280,10 +286,10 @@ pfset Solver.PrintSubsurf                               False
 pfset  Solver.Drop                                      1E-20
 pfset Solver.AbsTol                                     1E-12
 
+# write out a lot of output as SILO Files
 pfset Solver.WriteSiloSubsurfData                       True
 pfset Solver.WriteSiloPressure                          True
 pfset Solver.WriteSiloSaturation                        True
-
 pfset Solver.WriteSiloSlopes                            True
 pfset Solver.WriteSiloMask                              True
 pfset Solver.WriteSiloEvapTrans                         True
@@ -312,6 +318,12 @@ cd stormflow
 
 pfrun stormflow
 pfundist stormflow
+
+# generate the hydrograph
+# loop through the timesteps, load in the surface runoff output file
+# sum (over the domain) and output to the screen.  This can be sent to a
+# text file easily as well.
+#
 
 set runname stormflow
 
