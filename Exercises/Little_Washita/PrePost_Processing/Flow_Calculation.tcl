@@ -41,8 +41,8 @@ set runname        "LW"
 cd "../run_dir"
 
 #pfset  ComputationalGrid.NZ   1
-set sx   [pfload LW.slopex.pfb]
-set sy   [pfload LW.slopey.pfb]
+set sx   [pfload ../parflow_input/LW.slopex.pfb]
+set sy   [pfload ../parflow_input/LW.slopey.pfb]
 #pfset  ComputationalGrid.NZ   50
 
 set mask [pfload $runname.out.mask.pfb]
@@ -54,7 +54,7 @@ puts $output "Time\t  Pressure(m)\t  Flow(cms)\t"
 
 
 set Xloca 40
-set Yloca 31 
+set Yloca 31
 
 #Get the slope at the desired location
 set sx1 [pfgetelt $sx $Xloca $Yloca 0]
@@ -73,7 +73,7 @@ for {set ii 0} {$ii <=$timesteps } {incr ii} {
     puts $satin
     set satur [pfload $satin]
 
-    #Clean up 
+    #Clean up
     pfdelete $press
     unset press
     pfdelete $satur
@@ -91,7 +91,3 @@ for {set ii 0} {$ii <=$timesteps } {incr ii} {
 }
 
 close $output
-
-
-
-

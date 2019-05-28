@@ -74,7 +74,10 @@ This exercise will walk through a parking lot test for testing overland flow.
   - What are the boundary conditions of the model?
   - Where are the outputs going to be written to?
 
-2.	Run the simulation: `tclsh LW_Exercise2.tcl`
+2.	Run the simulation:
+```
+tclsh LW_Exercise2.tcl
+```
   - You should be able to see outputs being written to your new Exercise2 folder and you can also track the progress by looking at the  *.kinsol.log* file
 
 3.	Look at the pressure file outputs in visit:
@@ -87,7 +90,9 @@ This exercise will walk through a parking lot test for testing overland flow.
 
 4.	Use PFTools to calculate the flow at the outlet using `PrePost_Processing/Flow_Calculation.tcl`
   - Change the run name, output directory and number of timesteps to process in the top of the script
-  - `tclsh Flow_Calculation.tcl`
+```
+tclsh Flow_Calculation.tcl
+```
 
 5.	Copy `flow_out.txt` that was created in step 3 into excel or open in R and plot the time series
 
@@ -109,20 +114,19 @@ This exercise will walk through the process of 'spinning up' a ParFlow simulatio
    - Where is the initial condition set and what is it?
    - Where will the outputs of this run be written to?
 
-2.	Run the first part of a spinup simulation starting the domain dry and applying a constant flux across the top of the domain with overland flow turned off: `tclsh LW_Exercise3.tcl`
+2.	Run the first part of a spinup simulation starting the domain dry and applying a constant flux across the top of the domain with overland flow turned off:
+```
+tclsh LW_Exercise3.tcl
+```
+. Look at the outputs from the spinup as they are written to see how the pressure field changes and look at the *kinsol.log* file to see how the model is converging.
 
-3. Look at the outputs from the spinup as they are written to see how the pressure field changes and look at the *kinsol.log* file to see how the model is converging.
+4. Now we will run the second part of the spinup starting from our solution from Step 2 and turning overland flow on. If you have time, you should let the model from step 2 continue running until you have a steady state groundwater configuration, and use the final pressure file from that run as your initial condition for the this step. For now though, you can jump ahead and use the pressure file provided: `parflow_input/press.init.pfb`. In the tcl script you will need to change the following:
+   -	turn off the overland flow spinup flag
+   - Change the initial condition so it reads the press.init.pfb file
+   - Change the runname of your simulation
+Then run the simulation: `tclsh LW_Exercise3.tcl`
 
-4. If you have time you should let the model from step 2 continue running until 
 
-
-
-2.	Run the second part of spinup
-
--	Edit the LW_SpinupTest.tcl script:
-o	turn off the overland flow spinup flag
-o	Change the initial condition so it reads the press.init.pfb file
-o	Change the runname of your simulation
 -	Run the LW_SpinupTest.tcl
 -	Look at the outputs
 -	Modify the Flow_Calculation.tcl scrip to create a timeseries of flow at the outlet and plot
