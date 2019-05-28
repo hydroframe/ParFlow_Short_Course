@@ -30,9 +30,9 @@ pfset ComputationalGrid.NX                20
 pfset ComputationalGrid.NY                1
 pfset ComputationalGrid.NZ                300
 
-pfset ComputationalGrid.DX	             5.0
+pfset ComputationalGrid.DX               5.0
 pfset ComputationalGrid.DY               1.0
-pfset ComputationalGrid.DZ	              .05
+pfset ComputationalGrid.DZ                .05
 
 #---------------------------------------------------------
 # Domain Geometry
@@ -87,17 +87,17 @@ pfset Geom.domain.SpecificStorage.Value  1.0e-5
 
 pfset Phase.Names "water"
 
-pfset Phase.water.Density.Type	        Constant
-pfset Phase.water.Density.Value	        1.0
+pfset Phase.water.Density.Type         Constant
+pfset Phase.water.Density.Value        1.0
 
-pfset Phase.water.Viscosity.Type	      Constant
-pfset Phase.water.Viscosity.Value	      1.0
+pfset Phase.water.Viscosity.Type       Constant
+pfset Phase.water.Viscosity.Value      1.0
 
 #-----------------------------------------------------------------------------
 # Contaminants
 #-----------------------------------------------------------------------------
 
-pfset Contaminants.Names			""
+pfset Contaminants.Names                   ""
 
 #-----------------------------------------------------------------------------
 # Retardation
@@ -109,7 +109,7 @@ pfset Geom.Retardation.GeomNames           ""
 # Gravity
 #-----------------------------------------------------------------------------
 
-pfset Gravity				          1.0
+pfset Gravity                              1.0
 
 #-----------------------------------------------------------------------------
 # Setup timing info
@@ -196,32 +196,32 @@ pfset Cycle.rainrec.Repeat                -1
 pfset BCPressure.PatchNames                   "z-upper x-lower y-lower \
                                       x-upper y-upper z-lower"
 
-pfset Patch.x-lower.BCPressure.Type		      FluxConst
-pfset Patch.x-lower.BCPressure.Cycle		      "constant"
-pfset Patch.x-lower.BCPressure.alltime.Value	      0.0
+pfset Patch.x-lower.BCPressure.Type           FluxConst
+pfset Patch.x-lower.BCPressure.Cycle          "constant"
+pfset Patch.x-lower.BCPressure.alltime.Value      0.0
 
-pfset Patch.y-lower.BCPressure.Type		      FluxConst
-pfset Patch.y-lower.BCPressure.Cycle		      "constant"
-pfset Patch.y-lower.BCPressure.alltime.Value	      0.0
+pfset Patch.y-lower.BCPressure.Type          FluxConst
+pfset Patch.y-lower.BCPressure.Cycle         "constant"
+pfset Patch.y-lower.BCPressure.alltime.Value      0.0
 
-pfset Patch.z-lower.BCPressure.Type		      FluxConst
-pfset Patch.z-lower.BCPressure.Cycle		      "constant"
-pfset Patch.z-lower.BCPressure.alltime.Value	      0.0
+pfset Patch.z-lower.BCPressure.Type          FluxConst
+pfset Patch.z-lower.BCPressure.Cycle         "constant"
+pfset Patch.z-lower.BCPressure.alltime.Value      0.0
 
-pfset Patch.x-upper.BCPressure.Type		      FluxConst
-pfset Patch.x-upper.BCPressure.Cycle		      "constant"
-pfset Patch.x-upper.BCPressure.alltime.Value	      0.0
+pfset Patch.x-upper.BCPressure.Type          FluxConst
+pfset Patch.x-upper.BCPressure.Cycle         "constant"
+pfset Patch.x-upper.BCPressure.alltime.Value      0.0
 
-pfset Patch.y-upper.BCPressure.Type		      FluxConst
-pfset Patch.y-upper.BCPressure.Cycle		      "constant"
-pfset Patch.y-upper.BCPressure.alltime.Value	      0.0
+pfset Patch.y-upper.BCPressure.Type          FluxConst
+pfset Patch.y-upper.BCPressure.Cycle         "constant"
+pfset Patch.y-upper.BCPressure.alltime.Value      0.0
 
 ## overland flow boundary condition with very heavy rainfall then recession
 ## units of m/hour
-pfset Patch.z-upper.BCPressure.Type		      OverlandFlow
-pfset Patch.z-upper.BCPressure.Cycle		      "rainrec"
-pfset Patch.z-upper.BCPressure.rain.Value	      -0.07
-pfset Patch.z-upper.BCPressure.rec.Value	       0.00
+pfset Patch.z-upper.BCPressure.Type         OverlandFlow
+pfset Patch.z-upper.BCPressure.Cycle        "rainrec"
+pfset Patch.z-upper.BCPressure.rain.Value      -0.07
+pfset Patch.z-upper.BCPressure.rec.Value        0.00
 
 #---------------------------------------------------------
 # Topo slopes in x-direction
@@ -276,7 +276,7 @@ pfset Solver.Nonlinear.EtaChoice                         Walker1
 pfset Solver.Nonlinear.EtaValue                          0.001
 pfset Solver.Nonlinear.UseJacobian                       True
 pfset Solver.Nonlinear.DerivativeEpsilon                 1e-16
-pfset Solver.Nonlinear.StepTol				 1e-20
+pfset Solver.Nonlinear.StepTol                           1e-20
 pfset Solver.Nonlinear.Globalization                     LineSearch
 pfset Solver.Linear.KrylovDimension                      20
 pfset Solver.Linear.MaxRestart                           2
@@ -286,11 +286,11 @@ pfset Solver.Linear.Preconditioner.PCMatrixType          FullJacobian
 pfset Solver.Linear.Preconditioner                       PFMG
 pfset Solver.Linear.Preconditioner.MGSemi.MaxIter        1
 pfset Solver.Linear.Preconditioner.MGSemi.MaxLevels      10
-pfset Solver.PrintSubsurf				                         False
+pfset Solver.PrintSubsurf                                False
 pfset  Solver.Drop                                       1E-20
 pfset Solver.AbsTol                                      1E-12
 
-
+# write out a lot of output as SILO Files
 pfset Solver.WriteSiloSubsurfData                       True
 pfset Solver.WriteSiloPressure                          True
 pfset Solver.WriteSiloSaturation                        True
@@ -337,10 +337,10 @@ pfundist horton_over
 set runname horton_over
 
 for {set i 1} {$i <= 60} {incr i} {
-	set filename [format "%s.out.overlandsum.%05d.silo" $runname $i]
-	set surface_runoff2 [pfload $filename]
-	set total_surface_runoff2 [pfsum $surface_runoff2]
-	puts "$i $total_surface_runoff2"
+  set filename [format "%s.out.overlandsum.%05d.silo" $runname $i]
+  set surface_runoff2 [pfload $filename]
+  set total_surface_runoff2 [pfsum $surface_runoff2]
+  puts "$i $total_surface_runoff2"
 }
 
 #move back up to the current directory when finished
