@@ -124,7 +124,7 @@ pfset Geom.Retardation.GeomNames           ""
 # Gravity
 #-----------------------------------------------------------------------------
 
-pfset Gravity				1.0
+pfset Gravity                  1.0
 
 #-----------------------------------------------------------------------------
 # Setup timing info
@@ -261,7 +261,7 @@ pfset TopoSlopesY.Geom.domain.Value 0.00
 
 pfset Mannings.Type "Constant"
 pfset Mannings.GeomNames "domain"
-pfset Mannings.Geom.domain.Value 1.e-6
+pfset Mannings.Geom.domain.Value 2.e-6
 
 #-----------------------------------------------------------------------------
 # Phase sources:
@@ -322,10 +322,10 @@ pfset Solver.WriteSiloSpecificStorage                   True
 # -100m along the top of the domain; the top layer is initially very dry
 pfset ICPressure.Type                                   HydroStaticPatch
 pfset ICPressure.GeomNames                              domain
-pfset Geom.domain.ICPressure.Value                      -0.5
+pfset Geom.domain.ICPressure.Value                      -100
 
 pfset Geom.domain.ICPressure.RefGeom                    domain
-pfset Geom.domain.ICPressure.RefPatch                   z-lower
+pfset Geom.domain.ICPressure.RefPatch                   z-upper
 
 #-----------------------------------------------------------------------------
 # Run and Unload the ParFlow output files
