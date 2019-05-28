@@ -130,6 +130,7 @@ tclsh LW_Exercise3.tcl
 ```
 ###### Additional Tests to Run:
 -	 Modify the Flow_Calculation.tcl scrip to create a timeseries of flow at the outlet and plot
+- Try re-running step 2 using one of the 
 
 ____
 ### Exercise 4: Running and restarting ParFlow-CLM
