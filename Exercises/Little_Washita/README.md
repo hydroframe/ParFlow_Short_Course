@@ -122,7 +122,8 @@ Look at the outputs from the spinup as they are written to see how the pressure 
 
 3. Now we will run the second part of the spinup starting from our solution from Step 2 and turning overland flow on. If you have time, you should let the model from step 2 continue running until you have a steady state groundwater configuration, and use the final pressure file from that run as your initial condition for the this step. For now though, you can jump ahead and use the pressure file provided: `parflow_input/press.init.pfb`. In the tcl script you will need to change the following:
    -	turn off the overland flow spinup flag
-   - Change the initial condition so it reads the *press.init.pfb file*
+   - Change the initial condition so it reads the *press.init.pfb file*\
+   - Change the timing so that StopTime=200, DumpInterval=10.0 and TimeStep.Type=Constant
    - Change the runname of your simulation
 Then run the simulation and look at the outputs
 ```
