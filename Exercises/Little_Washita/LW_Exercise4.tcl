@@ -10,17 +10,22 @@ namespace import Parflow::*
 pfset     FileVersion    4
 
 #-----------------------------------------------------------------------------
-# Set Processor topology 
+# Set Processor topology
 #-----------------------------------------------------------------------------
 pfset Process.Topology.P 1
 pfset Process.Topology.Q 1
 pfset Process.Topology.R 1
 
 #-----------------------------------------------------------------------------
+# Setup run name and location
+#-----------------------------------------------------------------------------
+file mkdir Exercise4
+cd Exercise4
+set runname "LW_CLM"
+
+#-----------------------------------------------------------------------------
 # Make a directory for the simulation and copy inputs into it
 #-----------------------------------------------------------------------------
-cd "../run_dir"
-
 # ParFlow Inputs
 file copy -force "../parflow_input/LW.slopex.pfb" .
 file copy -force "../parflow_input/LW.slopey.pfb" .
@@ -30,7 +35,7 @@ file copy -force "../parflow_input/press.init.pfb"  .
 #CLM Inputs
 file copy -force "../clm_input/drv_clmin.dat" .
 file copy -force "../clm_input/drv_vegp.dat"  .
-file copy -force "../clm_input/drv_vegm.alluv.dat"  . 
+file copy -force "../clm_input/drv_vegm.alluv.dat"  .
 
 puts "Files Copied"
 
@@ -39,15 +44,15 @@ puts "Files Copied"
 #-----------------------------------------------------------------------------
 pfset ComputationalGrid.Lower.X           0.0
 pfset ComputationalGrid.Lower.Y           0.0
-pfset ComputationalGrid.Lower.Z           0.0 
+pfset ComputationalGrid.Lower.Z           0.0
 
 pfset ComputationalGrid.DX                1000.0
 pfset ComputationalGrid.DY                1000.0
 pfset ComputationalGrid.DZ                2.0
 
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
-pfset ComputationalGrid.NZ                50  
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
+pfset ComputationalGrid.NZ                50
 
 
 #-----------------------------------------------------------------------------
@@ -62,12 +67,12 @@ pfset GeomInput.box_input.InputType      Box
 pfset GeomInput.box_input.GeomName      domain
 
 #-----------------------------------------------------------------------------
-# Domain Geometry 
+# Domain Geometry
 #-----------------------------------------------------------------------------
 pfset Geom.domain.Lower.X                        0.0
 pfset Geom.domain.Lower.Y                        0.0
 pfset Geom.domain.Lower.Z                        0.0
- 
+
 pfset Geom.domain.Upper.X                        41000.0
 pfset Geom.domain.Upper.Y                        41000.0
 pfset Geom.domain.Upper.Z                          100.0
@@ -449,7 +454,7 @@ pfset Solver.PrintCLM                                 True
 #pfset Solver.PrintPressure                            True
 #pfset Solver.PrintSaturation                          True
 pfset Solver.PrintMask                                True
-pfset Solver.WriteSiloMask                            True   
+pfset Solver.WriteSiloMask                            True
 #pfset Solver.PrintCLM                                 True
 #pfset Solver.WriteSiloSpecificStorage                 False
 #pfset Solver.WriteSiloMannings                        False
@@ -483,7 +488,7 @@ pfset Solver.Nonlinear.ResidualTol                    1e-6
 ## new solver settings for Terrain Following Grid
 pfset Solver.Nonlinear.EtaChoice                         EtaConstant
 pfset Solver.Nonlinear.EtaValue                          0.001
-pfset Solver.Nonlinear.UseJacobian                       True 
+pfset Solver.Nonlinear.UseJacobian                       True
 pfset Solver.Nonlinear.DerivativeEpsilon                 1e-16
 pfset Solver.Nonlinear.StepTol				 			1e-30
 pfset Solver.Nonlinear.Globalization                     LineSearch
@@ -497,22 +502,21 @@ pfset Solver.Linear.Preconditioner.PCMatrixType     FullJacobian
 #-----------------------------------------------------------------------------
 # Distribute inputs
 #-----------------------------------------------------------------------------
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
 pfset ComputationalGrid.NZ                1
 pfdist LW.slopex.pfb
 pfdist LW.slopey.pfb
 
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
-pfset ComputationalGrid.NZ                50 
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
+pfset ComputationalGrid.NZ                50
 pfdist IndicatorFile_Gleeson.50z.pfb
 pfdist press.init.pfb
 
 #-----------------------------------------------------------------------------
-# Run Simulation 
+# Run Simulation
 #-----------------------------------------------------------------------------
-set runname "LW"
 puts $runname
 pfrun    $runname
 
@@ -526,5 +530,3 @@ pfundist LW.slopey.pfb
 pfundist IndicatorFile_Gleeson.50z.pfb
 
 puts "ParFlow run Complete"
-
-

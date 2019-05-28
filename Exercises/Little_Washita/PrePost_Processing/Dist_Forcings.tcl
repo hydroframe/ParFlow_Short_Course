@@ -6,6 +6,7 @@ namespace import Parflow::*
 
 
 #set tcl_precision 16
+cd ../NLDAS
 
 #-----------------------------------------------------------------------------
 # File input version number

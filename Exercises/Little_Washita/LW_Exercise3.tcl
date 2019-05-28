@@ -183,6 +183,7 @@ pfset TimeStep.InitialStep    1
 pfset TimeStep.GrowthFactor      1.1
 pfset TimeStep.MaxStep      100
 pfset TimeStep.MinStep      1
+#pfset TimeStep.Value                      1.0
 
 #-----------------------------------------------------------------------------
 # Porosity

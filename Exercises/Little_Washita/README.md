@@ -120,7 +120,7 @@ tclsh LW_Exercise3.tcl
 ```
 Look at the outputs from the spinup as they are written to see how the pressure field changes and look at the *kinsol.log* file to see how the model is converging.
 
-4. Now we will run the second part of the spinup starting from our solution from Step 2 and turning overland flow on. If you have time, you should let the model from step 2 continue running until you have a steady state groundwater configuration, and use the final pressure file from that run as your initial condition for the this step. For now though, you can jump ahead and use the pressure file provided: `parflow_input/press.init.pfb`. In the tcl script you will need to change the following:
+3. Now we will run the second part of the spinup starting from our solution from Step 2 and turning overland flow on. If you have time, you should let the model from step 2 continue running until you have a steady state groundwater configuration, and use the final pressure file from that run as your initial condition for the this step. For now though, you can jump ahead and use the pressure file provided: `parflow_input/press.init.pfb`. In the tcl script you will need to change the following:
    -	turn off the overland flow spinup flag
    - Change the initial condition so it reads the *press.init.pfb file*
    - Change the runname of your simulation
@@ -129,19 +129,39 @@ Then run the simulation and look at the outputs
 tclsh LW_Exercise3.tcl
 ```
 ###### Additional Tests to Run:
--	 Modify the Flow_Calculation.tcl scrip to create a timeseries of flow at the outlet and plot
+-	 Modify the Flow_Calculation.tcl scrip to create a time series of flow at the outlet and plot
 - Try re-running Steps 2 or 3 using one of the outputs you generated in Step 2
 
 ____
 ### Exercise 4: Running and restarting ParFlow-CLM
-1.	Decide on your processor topology:
-•	 Set Process.Topology keys in tcl_scripts/LW_Test.tcl
-•	Do the same in tcl_scripts/Dist_Forcings.tcl
-•	Run Dist_Forcings.tcl to distribute the meteorological forcings
-2.	Run LW_Test.tcl. This is setup to run for 24 hours. Use cat or tail to look at the kinsol.log file and see the progress and solver performance.  
-3.	Look at outputs in Visit. Note that in addition to pressure and saturation there are all of the additional CLM output variables to look at.  
-4.	Calculate the water balance components and the flow at the outlet using Calc_Water_Blance.tcl and Flow_Calculation.tcl. Use R or excel to look at the text outputs and look at the silos of water table depth in Visit.
-5.	Make VTKs out of the outputs using VTK_example.tcl and experiment with visualizations in Visit
+Now that you have a spunup ParFlow model it is time to run ParFlow-CLM
+
+1. Before you run the model, walk through the run script `LW_Exercise4.tcl` and answer the following:
+   - How are the input files handled differently in this this run script than the previous exercises?
+   - How many time steps will this exercise run for?
+   - Where are the forcing files being read from?
+   - What are the initial conditions for this run?
+   - Where will the outputs of this run be written to?
+
+2.	Decide on your processor topology and distribute your input files:
+   - Set the Process.Topology keys in the  `PrePost_Processing/Dist_Forcings.tcl`
+   - Distribute your forcing files
+   ```
+   cd PrePost_Processing
+   tclsh Dist_Forcings.tcl
+   ```
+   - Set the Process.Topology keys in the `LW_Exercise4.tcl` to match what you used in the `Dist_Forcings.tcl`
+
+3.	Run the Simulation
+```
+tclsh LW_Exercise4.tcl
+```
+
+4.	Look at outputs in Visit. Note that in addition to pressure and saturation there are all of the additional CLM output variables to look at.
+
+5.	Calculate the water balance components and the flow at the outlet using Calc_Water_Blance.tcl and Flow_Calculation.tcl. Use R or excel to look at the text outputs and look at the silos of water table depth in Visit.
+
+6.	Make VTKs out of the outputs using VTK_example.tcl and experiment with visualizations in Visit
 
 Restarting:
 Restart the run from where it left off. Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the tcl script:
@@ -165,14 +185,3 @@ Experiment with the model and outputs. Here are some suggestions:
 •	Add additional variables to your water balance
 •	Look at the forcing variables
 •	Run again on BlueM
-
-Preliminary Steps for running on BlueM:
-1.	Log into aun
-ssh –X <username>@bluem.mines.edu
-ssh –X aun
-cd scratch
-2.	Copy the exercise 2 folder
-cp -r /u/me/le/lcondon/scratch/Exercise2 .
-cd Exercise2/tclscripts
-3.	Set the PARFLOW_DIR environment variable
-export PARFLOW_DIR=/u/st/fl/jagilber/bins/ParF/PFv893
