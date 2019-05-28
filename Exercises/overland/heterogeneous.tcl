@@ -1,14 +1,19 @@
-#  This runs the tilted-v catchment problem
-#  similar to that in Kollet and Maxwell (2006) AWR
+#  This TCL script runs a Hortonian overland flow example
+# using ParFlow. It is configured to run using the orthagonal grid
+# using a PFSOLID file and to output total runoff. It is set up to have
+# correlated, random fields for the hydraulic conductivity.
 
-#
+# R. Maxwell, originally developed in 2009, updated PF Short Course 2019
+
 # Import the ParFlow TCL package
 #
-lappend auto_path $env(PARFLOW_DIR)/bin 
+lappend auto_path $env(PARFLOW_DIR)/bin
 package require parflow
 namespace import Parflow::*
 
 pfset FileVersion 4
+
+# running in serial
 
 pfset Process.Topology.P 1
 pfset Process.Topology.Q 1
@@ -25,20 +30,22 @@ pfset ComputationalGrid.NX                20
 pfset ComputationalGrid.NY                1
 pfset ComputationalGrid.NZ                300
 
-pfset ComputationalGrid.DX	         5.0
-pfset ComputationalGrid.DY               1.0
-pfset ComputationalGrid.DZ	            .05
+pfset ComputationalGrid.DX                5.0
+pfset ComputationalGrid.DY                1.0
+pfset ComputationalGrid.DZ                 .05
 
 #---------------------------------------------------------
-# Domain Geometry 
+# Domain Geometry
 #---------------------------------------------------------
 pfset GeomInput.Names                 "solidinput1"
+
+# notes: loads the PFSOLID file from one directory above the one PF runs in;
+# Note the patch order is important and must match the patch order in the solid
+# file
 
 pfset GeomInput.solidinput1.InputType  SolidFile
 pfset GeomInput.solidinput1.GeomNames  domain
 pfset GeomInput.solidinput1.FileName   ../tuff.pfsol
-
-
 pfset Geom.domain.Patches             "z-upper x-lower y-lower \
                                       x-upper y-upper z-lower"
 
@@ -50,7 +57,7 @@ pfset Geom.Perm.Names                 "domain"
 
 # Values in m/hour
 
-# these are examples to make the upper portions of the v heterogeneous
+# these are examples to make domain heterogeneous
 # the following is ignored if the perm.type "Constant" settings are not
 # commented out, below.
 
@@ -69,17 +76,9 @@ pfset Geom.domain.Perm.Seed  33333
 pfset Geom.domain.Perm.LogNormal Log
 pfset Geom.domain.Perm.StratType Bottom
 
-
-# hydraulic conductivity is very low, but not zero, top node will have to saturate
-# before overland flow can begin and will be driven by hortonian flow
-# comment out the left and right settings to make the subsurface heterogeneous using
-# turning bands above.  Run time increases quite a bit with a heterogeneous
-# subsurface
-#
-
+#commenting these lines out will make this like the regular 1-d overland run
 #pfset Geom.domain.Perm.Type            Constant
 #pfset Geom.domain.Perm.Value           0.00001
-#pfset Geom.domain.Perm.Value           10.
 
 pfset Perm.TensorType               TensorByGeom
 
@@ -125,29 +124,27 @@ pfset Geom.Retardation.GeomNames           ""
 # Gravity
 #-----------------------------------------------------------------------------
 
-pfset Gravity				1.0
+pfset Gravity                  1.0
 
 #-----------------------------------------------------------------------------
 # Setup timing info
 #-----------------------------------------------------------------------------
 
-# run for 2 hours @ 6min timesteps
-# 
-pfset TimingInfo.BaseUnit        1.0
+# run for 3 hours @ 3min timesteps
+#
+pfset TimingInfo.BaseUnit        0.05
 pfset TimingInfo.StartCount      0
 pfset TimingInfo.StartTime       0.0
 pfset TimingInfo.StopTime        3.0
 pfset TimingInfo.DumpInterval    -1
 pfset TimeStep.Type              Constant
 pfset TimeStep.Value             0.05
- 
+
 #-----------------------------------------------------------------------------
 # Porosity
 #-----------------------------------------------------------------------------
 
 pfset Geom.Porosity.GeomNames          "domain"
-
-
 pfset Geom.domain.Porosity.Type          Constant
 pfset Geom.domain.Porosity.Value         0.1
 
@@ -165,7 +162,7 @@ pfset Phase.RelPerm.Type               VanGenuchten
 pfset Phase.RelPerm.GeomNames          "domain"
 
 pfset Geom.domain.RelPerm.Alpha         6.0
-pfset Geom.domain.RelPerm.N             2. 
+pfset Geom.domain.RelPerm.N             2.
 
 #---------------------------------------------------------
 # Saturation
@@ -195,17 +192,23 @@ pfset Cycle.constant.alltime.Length      1
 pfset Cycle.constant.Repeat             -1
 
 # rainfall and recession time periods are defined here
-# rain for 1 hour, recession for 2 hours
+# rain for 3 hours, recession for 2 hours (change to rain for a different time)
+# this is a function of the BaseUnit set above, that is each length
+# is an integer mulitplier of that value.  The BaseUnit happens to be equal
+# to our timestep but that need not be the case, it's just good practice
 
 pfset Cycle.rainrec.Names                 "rain rec"
-pfset Cycle.rainrec.rain.Length           2
-pfset Cycle.rainrec.rec.Length            2
+pfset Cycle.rainrec.rain.Length           60
+pfset Cycle.rainrec.rec.Length            40
 pfset Cycle.rainrec.Repeat                -1
- 
+
+
 #-----------------------------------------------------------------------------
 # Boundary Conditions: Pressure
 #-----------------------------------------------------------------------------
-pfset BCPressure.PatchNames                   [pfget Geom.domain.Patches]
+# specify patches as a list for BC's
+pfset BCPressure.PatchNames                   "z-upper x-lower y-lower \
+                                      x-upper y-upper z-lower"
 
 pfset Patch.x-lower.BCPressure.Type		      FluxConst
 pfset Patch.x-lower.BCPressure.Cycle		      "constant"
@@ -227,7 +230,9 @@ pfset Patch.y-upper.BCPressure.Type		      FluxConst
 pfset Patch.y-upper.BCPressure.Cycle		      "constant"
 pfset Patch.y-upper.BCPressure.alltime.Value	      0.0
 
-## overland flow boundary condition with very heavy rainfall then slight ET
+## overland flow boundary condition with very heavy rainfall then recession
+## units of m/hour
+
 pfset Patch.z-upper.BCPressure.Type		      OverlandFlow
 pfset Patch.z-upper.BCPressure.Cycle		      "rainrec"
 pfset Patch.z-upper.BCPressure.rain.Value	      -0.07
@@ -251,12 +256,12 @@ pfset TopoSlopesY.GeomNames "domain"
 pfset TopoSlopesY.Geom.domain.Value 0.00
 
 #---------------------------------------------------------
-# Mannings coefficient 
+# Mannings coefficient
 #---------------------------------------------------------
 
 pfset Mannings.Type "Constant"
 pfset Mannings.GeomNames "domain"
-pfset Mannings.Geom.domain.Value 1.e-6
+pfset Mannings.Geom.domain.Value 2.e-6
 
 #-----------------------------------------------------------------------------
 # Phase sources:
@@ -282,28 +287,26 @@ pfset Solver.MaxIter                                     2500
 
 pfset Solver.Nonlinear.MaxIter                           300
 pfset Solver.Nonlinear.ResidualTol                       1e-6
-pfset Solver.Nonlinear.EtaChoice                         Walker1 
-#pfset Solver.Nonlinear.EtaChoice                         EtaConstant
+pfset Solver.Nonlinear.EtaChoice                         Walker1
 pfset Solver.Nonlinear.EtaValue                          0.001
-pfset Solver.Nonlinear.UseJacobian                       True 
+pfset Solver.Nonlinear.UseJacobian                       True
 pfset Solver.Nonlinear.DerivativeEpsilon                 1e-16
 pfset Solver.Nonlinear.StepTol				 1e-20
 pfset Solver.Nonlinear.Globalization                     LineSearch
 pfset Solver.Linear.KrylovDimension                      20
 pfset Solver.Linear.MaxRestart                           2
 
-pfset Solver.Linear.Preconditioner                      PFMG
+pfset Solver.Linear.Preconditioner                       PFMG
 
-pfset Solver.Linear.Preconditioner.MGSemi.MaxIter        1
-pfset Solver.Linear.Preconditioner.MGSemi.MaxLevels      10
-pfset Solver.PrintSubsurf				False
+pfset Solver.Linear.Preconditioner.MGSemi.MaxIter       1
+pfset Solver.Linear.Preconditioner.MGSemi.MaxLevels     10
+pfset Solver.PrintSubsurf                               False
 pfset  Solver.Drop                                      1E-20
 pfset Solver.AbsTol                                     1E-12
- 
-pfset Solver.WriteSiloSubsurfData True
-pfset Solver.WriteSiloPressure True
-pfset Solver.WriteSiloSaturation True
 
+pfset Solver.WriteSiloSubsurfData                       True
+pfset Solver.WriteSiloPressure                          True
+pfset Solver.WriteSiloSaturation                        True
 pfset Solver.WriteSiloSlopes                            True
 pfset Solver.WriteSiloMask                              True
 pfset Solver.WriteSiloEvapTrans                         True
@@ -315,24 +318,30 @@ pfset Solver.WriteSiloSpecificStorage                   True
 # Initial conditions: water pressure
 #---------------------------------------------------------
 
-# set water table to be at the bottom of the domain, the top layer is initially dry
+# set water table to be very deep; the pressure-head is
+# -100m along the top of the domain; the top layer is initially very dry
 pfset ICPressure.Type                                   HydroStaticPatch
 pfset ICPressure.GeomNames                              domain
-pfset Geom.domain.ICPressure.Value                      -0.5
+pfset Geom.domain.ICPressure.Value                      -100
 
 pfset Geom.domain.ICPressure.RefGeom                    domain
-pfset Geom.domain.ICPressure.RefPatch                   z-lower
+pfset Geom.domain.ICPressure.RefPatch                   z-upper
 
 #-----------------------------------------------------------------------------
 # Run and Unload the ParFlow output files
 #-----------------------------------------------------------------------------
 
-file mkdir heterog  
+file mkdir heterog
 cd heterog
 
 pfrun heterog
 pfundist heterog
 
+# generate the hydrograph
+# loop through the timesteps, load in the surface runoff output file
+# sum (over the domain) and output to the screen.  This can be sent to a
+# text file easily as well.
+#
 set runname heterog
 
 for {set i 1} {$i <= 60} {incr i} {

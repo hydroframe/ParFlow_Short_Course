@@ -78,17 +78,17 @@ pfset Geom.domain.SpecificStorage.Value 1.0e-5
 
 pfset Phase.Names "water"
 
-pfset Phase.water.Density.Type	        Constant
-pfset Phase.water.Density.Value	        1.0
+pfset Phase.water.Density.Type           Constant
+pfset Phase.water.Density.Value          1.0
 
-pfset Phase.water.Viscosity.Type	Constant
-pfset Phase.water.Viscosity.Value	1.0
+pfset Phase.water.Viscosity.Type         Constant
+pfset Phase.water.Viscosity.Value        1.0
 
 #-----------------------------------------------------------------------------
 # Contaminants
 #-----------------------------------------------------------------------------
 
-pfset Contaminants.Names			""
+pfset Contaminants.Names                 ""
 
 #-----------------------------------------------------------------------------
 # Retardation
@@ -100,7 +100,7 @@ pfset Geom.Retardation.GeomNames           ""
 # Gravity
 #-----------------------------------------------------------------------------
 
-pfset Gravity				1.0
+pfset Gravity                      1.0
 
 #-----------------------------------------------------------------------------
 # Setup timing info
@@ -235,9 +235,9 @@ pfset TopoSlopesY.Geom.domain.Value 0.00
 # Mannings coefficient
 #---------------------------------------------------------
 
-pfset Mannings.Type "Constant"
-pfset Mannings.GeomNames "domain"
-pfset Mannings.Geom.domain.Value 2.e-6
+pfset Mannings.Type                    "Constant"
+pfset Mannings.GeomNames               "domain"
+pfset Mannings.Geom.domain.Value       2.e-6
 
 #-----------------------------------------------------------------------------
 # Phase sources:
