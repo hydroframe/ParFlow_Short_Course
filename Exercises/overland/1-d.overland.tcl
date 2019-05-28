@@ -15,16 +15,16 @@ pfset FileVersion 4
 
 # running in serial
 
-pfset Process.Topology.P 1
-pfset Process.Topology.Q 1
-pfset Process.Topology.R 1
+pfset Process.Topology.P      1
+pfset Process.Topology.Q      1
+pfset Process.Topology.R      1
 
 #---------------------------------------------------------
 # Computational Grid
 #---------------------------------------------------------
-pfset ComputationalGrid.Lower.X           0.0
-pfset ComputationalGrid.Lower.Y           0.0
-pfset ComputationalGrid.Lower.Z           0.0
+pfset ComputationalGrid.Lower.X          0.0
+pfset ComputationalGrid.Lower.Y          0.0
+pfset ComputationalGrid.Lower.Z          0.0
 
 pfset ComputationalGrid.NX                20
 pfset ComputationalGrid.NY                1
@@ -62,24 +62,24 @@ pfset Geom.Perm.Names                 "domain"
 # before overland flow can begin and will be driven by Hortonian flow
 
 
-pfset Geom.domain.Perm.Type            Constant
-pfset Geom.domain.Perm.Value           0.00001
+pfset Geom.domain.Perm.Type             Constant
+pfset Geom.domain.Perm.Value            0.00001
 
-pfset Perm.TensorType               TensorByGeom
+pfset Perm.TensorType                   TensorByGeom
 
-pfset Geom.Perm.TensorByGeom.Names  "domain"
+pfset Geom.Perm.TensorByGeom.Names      "domain"
 
-pfset Geom.domain.Perm.TensorValX  1.0d0
-pfset Geom.domain.Perm.TensorValY  1.0d0
-pfset Geom.domain.Perm.TensorValZ  1.0d0
+pfset Geom.domain.Perm.TensorValX       1.0d0
+pfset Geom.domain.Perm.TensorValY       1.0d0
+pfset Geom.domain.Perm.TensorValZ       1.0d0
 
 #-----------------------------------------------------------------------------
 # Specific Storage
 #-----------------------------------------------------------------------------
 
-pfset SpecificStorage.Type            Constant
-pfset SpecificStorage.GeomNames       "domain"
-pfset Geom.domain.SpecificStorage.Value 1.0e-5
+pfset SpecificStorage.Type               Constant
+pfset SpecificStorage.GeomNames          "domain"
+pfset Geom.domain.SpecificStorage.Value  1.0e-5
 
 #-----------------------------------------------------------------------------
 # Phases
@@ -90,8 +90,8 @@ pfset Phase.Names "water"
 pfset Phase.water.Density.Type	        Constant
 pfset Phase.water.Density.Value	        1.0
 
-pfset Phase.water.Viscosity.Type	Constant
-pfset Phase.water.Viscosity.Value	1.0
+pfset Phase.water.Viscosity.Type	      Constant
+pfset Phase.water.Viscosity.Value	      1.0
 
 #-----------------------------------------------------------------------------
 # Contaminants
@@ -109,7 +109,7 @@ pfset Geom.Retardation.GeomNames           ""
 # Gravity
 #-----------------------------------------------------------------------------
 
-pfset Gravity				1.0
+pfset Gravity				          1.0
 
 #-----------------------------------------------------------------------------
 # Setup timing info
@@ -130,7 +130,6 @@ pfset TimeStep.Value             0.05
 #-----------------------------------------------------------------------------
 
 pfset Geom.Porosity.GeomNames          "domain"
-
 
 pfset Geom.domain.Porosity.Type          Constant
 pfset Geom.domain.Porosity.Value         0.1
@@ -222,7 +221,7 @@ pfset Patch.y-upper.BCPressure.alltime.Value	      0.0
 pfset Patch.z-upper.BCPressure.Type		      OverlandFlow
 pfset Patch.z-upper.BCPressure.Cycle		      "rainrec"
 pfset Patch.z-upper.BCPressure.rain.Value	      -0.07
-pfset Patch.z-upper.BCPressure.rec.Value	      0.00
+pfset Patch.z-upper.BCPressure.rec.Value	       0.00
 
 #---------------------------------------------------------
 # Topo slopes in x-direction
@@ -255,7 +254,7 @@ pfset Mannings.Geom.domain.Value 2.e-6
 
 pfset PhaseSources.water.Type                         Constant
 pfset PhaseSources.water.GeomNames                    domain
-pfset PhaseSources.water.Geom.domain.Value        0.0
+pfset PhaseSources.water.Geom.domain.Value            0.0
 
 #-----------------------------------------------------------------------------
 # Exact solution specification for error calculations
@@ -282,19 +281,19 @@ pfset Solver.Nonlinear.Globalization                     LineSearch
 pfset Solver.Linear.KrylovDimension                      20
 pfset Solver.Linear.MaxRestart                           2
 
-pfset Solver.Linear.Preconditioner.PCMatrixType     FullJacobian
+pfset Solver.Linear.Preconditioner.PCMatrixType          FullJacobian
 
-pfset Solver.Linear.Preconditioner                      PFMG
+pfset Solver.Linear.Preconditioner                       PFMG
 pfset Solver.Linear.Preconditioner.MGSemi.MaxIter        1
 pfset Solver.Linear.Preconditioner.MGSemi.MaxLevels      10
-pfset Solver.PrintSubsurf				False
-pfset  Solver.Drop                                      1E-20
-pfset Solver.AbsTol                                     1E-12
+pfset Solver.PrintSubsurf				                         False
+pfset  Solver.Drop                                       1E-20
+pfset Solver.AbsTol                                      1E-12
 
 
-pfset Solver.WriteSiloSubsurfData True
-pfset Solver.WriteSiloPressure True
-pfset Solver.WriteSiloSaturation True
+pfset Solver.WriteSiloSubsurfData                       True
+pfset Solver.WriteSiloPressure                          True
+pfset Solver.WriteSiloSaturation                        True
 pfset Solver.WriteSiloSlopes                            True
 pfset Solver.WriteSiloMask                              True
 pfset Solver.WriteSiloEvapTrans                         True
