@@ -74,10 +74,10 @@ This exercise will walk through a parking lot test for testing overland flow.
   - What are the boundary conditions of the model?
   - Where are the outputs going to be written to?
 
-1.	Run the simulation: `tclsh LW_Exercise2.tcl`
+2.	Run the simulation: `tclsh LW_Exercise2.tcl`
   - You should be able to see outputs being written to your new Exercise2 folder and you can also track the progress by looking at the  *.kinsol.log* file
 
-2.	Look at the pressure file outputs in visit:
+3.	Look at the pressure file outputs in visit:
 ```
 •	File - Open
 •	Add - Pseudocolor - pressure- Draw
@@ -85,11 +85,11 @@ This exercise will walk through a parking lot test for testing overland flow.
 •	Use the time slider to advance through the simulation.
 ```
 
-3.	Use PFTools to calculate the flow at the outlet using `PrePost_Processing/Flow_Calculation.tcl`
+4.	Use PFTools to calculate the flow at the outlet using `PrePost_Processing/Flow_Calculation.tcl`
   - Change the run name, output directory and number of timesteps to process in the top of the script
   - `tclsh Flow_Calculation.tcl`
 
-4.	Copy `flow_out.txt` that was created in step 3 into excel or open in R and plot the time series
+5.	Copy `flow_out.txt` that was created in step 3 into excel or open in R and plot the time series
 
 ###### Additional Tests to Run:
 1.	Change the run time, rainfall timing and magnitude
@@ -99,16 +99,22 @@ This exercise will walk through a parking lot test for testing overland flow.
 
 ___
 ### Exercise 3: Spinup
+This exercise will walk through the process of 'spinning up' a ParFlow simulation. It starts from a dry domain and applies a constant recharge forcing.
 
-1.	Run the first part of a spinup simulation starting the domain dry and applying a constant flux across the top of the domain with overland flow turned off
+1. Before you run the model, walk through the run script `LW_Exercise3.tcl` and answer the following:
+   - How long will this run for and what is the timestep?
+   - Is the subsurface homogeneous or heterogeneous?
+   - How does the hydraulic conductivity compare to ***Exercise 2***?
+   - How is the surface flux for this case different from ***Exercise 2***?
+   - Where is the initial condition set and what is it?
+   - Where will the outputs of this run be written to?
 
-<ul>
--	Copy LW_Exercise3 folder from Powell to where you will be running locally
-scp guestxx@powell.mines.edu:/data/ParFlow_Short_Course2018/LW_Exercise3.tar .
--	Run the spinup tclsh LW_SpinupTest.tcl
--	Look at the outputs as they are generated
--	Look at the kinsol log file
-<ul>
+2.	Run the first part of a spinup simulation starting the domain dry and applying a constant flux across the top of the domain with overland flow turned off: `tclsh LW_Exercise3.tcl`
+
+3. Look at the outputs from the spinup as they are written to see how the pressure field changes and look at the *kinsol.log* file to see how the model is converging.
+
+4. If you have time you should let the model from step 2 continue running until 
+
 
 
 2.	Run the second part of spinup

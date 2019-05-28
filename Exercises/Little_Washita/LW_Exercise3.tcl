@@ -10,7 +10,14 @@ namespace import Parflow::*
 pfset     FileVersion    4
 
 #-----------------------------------------------------------------------------
-# Set Processor topology 
+# Setup run name and location
+#-----------------------------------------------------------------------------
+file mkdir Exercise3
+cd Exercise3
+set runname "LW_Spinup"
+
+#-----------------------------------------------------------------------------
+# Set Processor topology
 #-----------------------------------------------------------------------------
 pfset Process.Topology.P 1
 pfset Process.Topology.Q 1
@@ -21,15 +28,15 @@ pfset Process.Topology.R 1
 #-----------------------------------------------------------------------------
 pfset ComputationalGrid.Lower.X           0.0
 pfset ComputationalGrid.Lower.Y           0.0
-pfset ComputationalGrid.Lower.Z           0.0 
+pfset ComputationalGrid.Lower.Z           0.0
 
 pfset ComputationalGrid.DX                1000.0
 pfset ComputationalGrid.DY                1000.0
 pfset ComputationalGrid.DZ                2.0
 
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
-pfset ComputationalGrid.NZ                50  
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
+pfset ComputationalGrid.NZ                50
 
 
 #-----------------------------------------------------------------------------
@@ -44,12 +51,12 @@ pfset GeomInput.box_input.InputType      Box
 pfset GeomInput.box_input.GeomName      domain
 
 #-----------------------------------------------------------------------------
-# Domain Geometry 
+# Domain Geometry
 #-----------------------------------------------------------------------------
 pfset Geom.domain.Lower.X                        0.0
 pfset Geom.domain.Lower.Y                        0.0
 pfset Geom.domain.Lower.Z                        0.0
- 
+
 pfset Geom.domain.Upper.X                        41000.0
 pfset Geom.domain.Upper.Y                        41000.0
 pfset Geom.domain.Upper.Z                          100.0
@@ -60,7 +67,7 @@ pfset Geom.domain.Patches             "x-lower x-upper y-lower y-upper z-lower z
 #-----------------------------------------------------------------------------
 pfset GeomInput.indi_input.InputType      IndicatorField
 pfset GeomInput.indi_input.GeomNames      "s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 g1 g2 g3 g4 g5 g6 g7 g8"
-pfset Geom.indi_input.FileName            "IndicatorFile_Gleeson.50z.pfb"
+pfset Geom.indi_input.FileName            "../parflow_input/IndicatorFile_Gleeson.50z.pfb"
 
 pfset GeomInput.s1.Value                1
 pfset GeomInput.s2.Value                2
@@ -167,7 +174,7 @@ pfset Gravity                             1.0
 # Timing (time units is set by units of permeability)
 #-----------------------------------------------------------------------------
 pfset TimingInfo.BaseUnit        10.0
-pfset TimingInfo.StartCount      0 
+pfset TimingInfo.StartCount      0
 pfset TimingInfo.StartTime       0.0
 pfset TimingInfo.StopTime        10000000.0
 pfset TimingInfo.DumpInterval    100.0
@@ -175,7 +182,7 @@ pfset TimeStep.Type              Growth
 pfset TimeStep.InitialStep    1
 pfset TimeStep.GrowthFactor      1.1
 pfset TimeStep.MaxStep      100
-pfset TimeStep.MinStep      1                  
+pfset TimeStep.MinStep      1
 
 #-----------------------------------------------------------------------------
 # Porosity
@@ -265,21 +272,21 @@ pfset Patch.z-upper.BCPressure.Type		      OverlandFlow
 pfset Patch.z-upper.BCPressure.Cycle		      "constant"
 #pfset Patch.z-upper.BCPressure.alltime.Value	      0.0
 # constant recharge at 185 mm / y
-pfset Patch.z-upper.BCPressure.alltime.Value         -2.1E-05 
+pfset Patch.z-upper.BCPressure.alltime.Value         -2.1E-05
 
 #-----------------------------------------------------------------------------
 # Topo slopes in x-direction
 #-----------------------------------------------------------------------------
 pfset TopoSlopesX.Type                                "PFBFile"
 pfset TopoSlopesX.GeomNames                           "domain"
-pfset TopoSlopesX.FileName                            "LW.slopex.pfb"
+pfset TopoSlopesX.FileName                            "../parflow_input/LW.slopex.pfb"
 
 #-----------------------------------------------------------------------------
 # Topo slopes in y-direction
 #-----------------------------------------------------------------------------
 pfset TopoSlopesY.Type                                "PFBFile"
 pfset TopoSlopesY.GeomNames                           "domain"
-pfset TopoSlopesY.FileName                            "LW.slopey.pfb"
+pfset TopoSlopesY.FileName                            "../parflow_input/LW.slopey.pfb"
 
 #-----------------------------------------------------------------------------
 # Mannings coefficient
@@ -394,7 +401,7 @@ pfset PhaseSources.water.Geom.domain.Value            0.0
 #pfset ICPressure.Type                                 PFBFile
 #pfset ICPressure.GeomNames                            domain
 #pfset Geom.domain.ICPressure.RefPatch                   z-upper
-#pfset Geom.domain.ICPressure.FileName                   press.init.pfb
+#pfset Geom.domain.ICPressure.FileName                   ../parflow_input/press.init.pfb
 
 # Starting the domain dry
 pfset ICPressure.Type                                   HydroStaticPatch
@@ -453,7 +460,7 @@ pfset Solver.Nonlinear.ResidualTol                    1e-6
 ## new solver settings for Terrain Following Grid
 pfset Solver.Nonlinear.EtaChoice                         EtaConstant
 pfset Solver.Nonlinear.EtaValue                          0.001
-pfset Solver.Nonlinear.UseJacobian                       True 
+pfset Solver.Nonlinear.UseJacobian                       True
 pfset Solver.Nonlinear.DerivativeEpsilon                 1e-16
 pfset Solver.Nonlinear.StepTol				 			1e-30
 pfset Solver.Nonlinear.Globalization                     LineSearch
@@ -468,34 +475,31 @@ pfset OverlandFlowSpinUp  	1
 #-----------------------------------------------------------------------------
 # Distribute inputs
 #-----------------------------------------------------------------------------
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
 pfset ComputationalGrid.NZ                1
-pfdist LW.slopex.pfb
-pfdist LW.slopey.pfb
+pfdist ../parflow_input/LW.slopex.pfb
+pfdist ../parflow_input/LW.slopey.pfb
 
-pfset ComputationalGrid.NX                41 
-pfset ComputationalGrid.NY                41 
-pfset ComputationalGrid.NZ                50 
-pfdist IndicatorFile_Gleeson.50z.pfb
-pfdist press.init.pfb
+pfset ComputationalGrid.NX                41
+pfset ComputationalGrid.NY                41
+pfset ComputationalGrid.NZ                50
+pfdist ../parflow_input/IndicatorFile_Gleeson.50z.pfb
+#pfdist ../parflow_input/press.init.pfb
 
 #-----------------------------------------------------------------------------
-# Run Simulation 
+# Run Simulation
 #-----------------------------------------------------------------------------
-set runname "LW"
 puts $runname
-pfrun    $runname
+pfrun $runname
 
 #-----------------------------------------------------------------------------
 # Undistribute outputs
 #-----------------------------------------------------------------------------
 pfundist $runname
 #pfundist press.init.pfb
-pfundist LW.slopex.pfb
-pfundist LW.slopey.pfb
-pfundist IndicatorFile_Gleeson.50z.pfb
+pfundist ../parflow_input/LW.slopex.pfb
+pfundist ../parflow_input/LW.slopey.pfb
+pfundist ../parflow_input/IndicatorFile_Gleeson.50z.pfb
 
 puts "ParFlow run Complete"
-
-
