@@ -55,9 +55,9 @@ pfset Geom.Perm.Names                 "domain"
 
 # Values in m/hour
 
-# these are examples to make the upper portions of the v heterogeneous
-# the following is ignored if the perm.type "Constant" settings are not
-# commented out, below.
+# these are examples to make the domain heterogeneous
+# the following is ignored if the perm.type "Constant" settings are
+# uncommented out, below.
 
 pfset Geom.domain.Perm.Type "TurnBands"
 pfset Geom.domain.Perm.LambdaX  25.
@@ -75,12 +75,6 @@ pfset Geom.domain.Perm.LogNormal Log
 pfset Geom.domain.Perm.StratType Bottom
 
 
-# hydraulic conductivity is very low, but not zero, top node will have to saturate
-# before overland flow can begin and will be driven by hortonian flow
-# comment out the left and right settings to make the subsurface heterogeneous using
-# turning bands above.  Run time increases quite a bit with a heterogeneous
-# subsurface
-#
 
 #pfset Geom.domain.Perm.Type            Constant
 #pfset Geom.domain.Perm.Value           0.00001
@@ -136,9 +130,9 @@ pfset Gravity				1.0
 # Setup timing info
 #-----------------------------------------------------------------------------
 
-# run for 2 hours @ 6min timesteps
+# run for 3 hours @ 3min timesteps
 #
-pfset TimingInfo.BaseUnit        1.0
+pfset TimingInfo.BaseUnit        0.05
 pfset TimingInfo.StartCount      0
 pfset TimingInfo.StartTime       0.0
 pfset TimingInfo.StopTime        3.0
@@ -151,7 +145,6 @@ pfset TimeStep.Value             0.05
 #-----------------------------------------------------------------------------
 
 pfset Geom.Porosity.GeomNames          "domain"
-
 
 pfset Geom.domain.Porosity.Type          Constant
 pfset Geom.domain.Porosity.Value         0.1
@@ -200,17 +193,23 @@ pfset Cycle.constant.alltime.Length      1
 pfset Cycle.constant.Repeat             -1
 
 # rainfall and recession time periods are defined here
-# rain for 1 hour, recession for 2 hours
+# rain for 3 hours, recession for 2 hours (change to rain for a different time)
+# this is a function of the BaseUnit set above, that is each length
+# is an integer mulitplier of that value.  The BaseUnit happens to be equal
+# to our timestep but that need not be the case, it's just good practice
 
 pfset Cycle.rainrec.Names                 "rain rec"
-pfset Cycle.rainrec.rain.Length           2
-pfset Cycle.rainrec.rec.Length            2
+pfset Cycle.rainrec.rain.Length           60
+pfset Cycle.rainrec.rec.Length            40
 pfset Cycle.rainrec.Repeat                -1
+
 
 #-----------------------------------------------------------------------------
 # Boundary Conditions: Pressure
 #-----------------------------------------------------------------------------
-pfset BCPressure.PatchNames                   [pfget Geom.domain.Patches]
+# specify patches as a list for BC's
+pfset BCPressure.PatchNames                   "z-upper x-lower y-lower \
+                                      x-upper y-upper z-lower"
 
 pfset Patch.x-lower.BCPressure.Type		      FluxConst
 pfset Patch.x-lower.BCPressure.Cycle		      "constant"
@@ -232,7 +231,7 @@ pfset Patch.y-upper.BCPressure.Type		      FluxConst
 pfset Patch.y-upper.BCPressure.Cycle		      "constant"
 pfset Patch.y-upper.BCPressure.alltime.Value	      0.0
 
-## overland flow boundary condition with very heavy rainfall then slight ET
+## overland flow boundary condition with very heavy rainfall then recession
 pfset Patch.z-upper.BCPressure.Type		      OverlandFlow
 pfset Patch.z-upper.BCPressure.Cycle		      "rainrec"
 pfset Patch.z-upper.BCPressure.rain.Value	      -0.07
@@ -259,9 +258,9 @@ pfset TopoSlopesY.Geom.domain.Value 0.00
 # Mannings coefficient
 #---------------------------------------------------------
 
-pfset Mannings.Type "Constant"
-pfset Mannings.GeomNames "domain"
-pfset Mannings.Geom.domain.Value 2.e-6
+pfset Mannings.Type                       "Constant"
+pfset Mannings.GeomNames                  "domain"
+pfset Mannings.Geom.domain.Value          2.e-6
 
 #-----------------------------------------------------------------------------
 # Phase sources:
@@ -277,7 +276,6 @@ pfset PhaseSources.water.Geom.domain.Value        0.0
 
 pfset KnownSolution                                    NoKnownSolution
 
-
 #-----------------------------------------------------------------------------
 # Set solver parameters
 #-----------------------------------------------------------------------------
@@ -288,28 +286,27 @@ pfset Solver.MaxIter                                     2500
 pfset Solver.Nonlinear.MaxIter                           300
 pfset Solver.Nonlinear.ResidualTol                       1e-6
 pfset Solver.Nonlinear.EtaChoice                         Walker1
-#pfset Solver.Nonlinear.EtaChoice                         EtaConstant
 pfset Solver.Nonlinear.EtaValue                          0.001
 pfset Solver.Nonlinear.UseJacobian                       True
 pfset Solver.Nonlinear.DerivativeEpsilon                 1e-16
-pfset Solver.Nonlinear.StepTol				 1e-20
+pfset Solver.Nonlinear.StepTol                           1e-20
 pfset Solver.Nonlinear.Globalization                     LineSearch
 pfset Solver.Linear.KrylovDimension                      20
 pfset Solver.Linear.MaxRestart                           2
 
-pfset Solver.Linear.Preconditioner                      PFMG
-pfset Solver.Linear.Preconditioner.PCMatrixType     FullJacobian
+pfset Solver.Linear.Preconditioner.PCMatrixType          FullJacobian
 
+pfset Solver.Linear.Preconditioner                       PFMG
 pfset Solver.Linear.Preconditioner.MGSemi.MaxIter        1
 pfset Solver.Linear.Preconditioner.MGSemi.MaxLevels      10
-pfset Solver.PrintSubsurf				False
-pfset  Solver.Drop                                      1E-20
-pfset Solver.AbsTol                                     1E-12
+pfset Solver.PrintSubsurf                                False
+pfset  Solver.Drop                                       1E-20
+pfset Solver.AbsTol                                      1E-12
 
-pfset Solver.WriteSiloSubsurfData True
-pfset Solver.WriteSiloPressure True
-pfset Solver.WriteSiloSaturation True
-
+# write out a lot of output as SILO Files
+pfset Solver.WriteSiloSubsurfData                       True
+pfset Solver.WriteSiloPressure                          True
+pfset Solver.WriteSiloSaturation                        True
 pfset Solver.WriteSiloSlopes                            True
 pfset Solver.WriteSiloMask                              True
 pfset Solver.WriteSiloEvapTrans                         True
@@ -317,6 +314,7 @@ pfset Solver.WriteSiloEvapTransSum                      True
 pfset Solver.WriteSiloOverlandSum                       True
 pfset Solver.WriteSiloMannings                          True
 pfset Solver.WriteSiloSpecificStorage                   True
+
 #---------------------------------------------------------
 # Initial conditions: water pressure
 #---------------------------------------------------------
@@ -338,6 +336,12 @@ cd heterog-dunne
 
 pfrun heterog-dunne
 pfundist heterog-dunne
+
+# generate the hydrograph
+# loop through the timesteps, load in the surface runoff output file
+# sum (over the domain) and output to the screen.  This can be sent to a
+# text file easily as well.
+
 
 set runname heterog-dunne
 
