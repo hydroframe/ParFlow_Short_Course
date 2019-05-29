@@ -103,6 +103,7 @@ tclsh Flow_Calculation.tcl
 
 ###### Additional Tests to Run:
 +	Change the run time, rainfall timing and magnitude
++ Chang the frequency at which outputs are written
 +	Change `Flow_Calculation.tcl` to look at the flow in alternate locations
 +  Use the *set* command to set the slopex and slopey file names in the top of the tcl script. Then modify the rest of the script to refer to these new variables rather than using the complete file path.
 +	Change the slope at the outlet of the domain and see how this changes the simulation (Hint: to do this you can convert your pfb slopes to text files using File_Conversion.tcl and manually change values. The outlet of the domain is at x=40, y=31)  
