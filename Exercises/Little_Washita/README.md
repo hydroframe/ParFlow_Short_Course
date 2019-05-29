@@ -54,7 +54,7 @@ Variables:
 Exercises
 --------------------
 ### Exercise 1: An initial ParFlow-CLM Run
-For the first exercise, we are going to run Exercise4 without making an changes, just to see what its like to run a simulation.
+For the first exercise we are just going to run Exercise4 without making an changes to see what its like to run a simulation.
 
 1. Before you run the model, take a quick look at the run script `LW_Exercise4.tcl` and answer the following:
   - How many timesteps will this run for?
