@@ -28,4 +28,5 @@
 
 *Q: What does subsurface storage have to do with the runoff response?*
 
-## **E**. Using ParaView, plot the saturation for `1-d.overland.tcl` and the `heterogeneous.tcl` simulations.  What are the differences?  Also using ParaView, plot the saturations for `dunne_flow.tcl` and `het-dunne.tcl` simulations.  What are the differences here?
+## **E**. Using ParaView, plot the saturation for `1-d.overland.tcl` and the `heterogeneous.tcl` simulations.  
+What are the differences?  Also using ParaView, plot the saturations for `dunne_flow.tcl` and `het-dunne.tcl` simulations.  What are the differences here?
