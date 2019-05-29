@@ -54,13 +54,19 @@ Variables:
 
 Exercises
 --------------------
+### Exercise 1: An initial ParFlow-CLM Run
+For the first exercise, we are going to run Exercise4 without making an changes, just to see what its like to run a simulation.
 
-### Exercise 1: My First ParFlow-CLM Run
-1.	Copy Exercise 1 into your working directory
-2.	Make a new directory called *run_dir*
-3.	Copy the *LW_test.tcl* script from the tcl_Scripts folder to your run directory
-4.	Run the tcl script:
-`tclsh LW_test.tcl`
+1. Before you run the model, take a quick look at the run script `LW_Exercise4.tcl` and answer the following:
+  - How many timesteps will this run for?
+  - Where will the outputs be written?
+  - How many processors is this running on?
+
+2.	Now run the tcl script
+```
+tclsh LW_Exercise4.tcl
+```
+If it worked you see a new folder called *Exercise4* and outputs from the simulation will be written there.
 
 ___
 ### Exercise 2: Parking lot Test
@@ -164,27 +170,26 @@ tclsh LW_Exercise4.tcl
 
 6.	Make VTKs out of the outputs using `PrePost_Processing/VTK_example.tcl` and experiment with visualizations in Visit
 
-____
-### Exercise 5: Restarting ParFlow-CLM
-Restarting:
-Restart the run from where it left off. Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the tcl script:
-•	 TimingInfo.StartCount               19.0
-•	pfset TimingInfo.StartTime                19.0
-•	pfset TimingInfo.StopTime                 48.0
-•	pfset Geom.domain.ICPressure.FileName        LW.out.press.00019.pfb
-•	pfdist LW.out.press.00019.pfb
-•	pfset Solver.CLM.IstepStart                           20
-Also in drv_clmin.dat you should change:
-•	startcode 	1
-•	clm_ic  	1
-
+7. *Restarting*:
+No we will try restarting a ParFlow-CLM run from where the run from Step 4 ended.  Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the `LW_Exercise4.tcl` script:
+```
+TimingInfo.StartCount               19.0
+pfset TimingInfo.StartTime                19.0
+pfset TimingInfo.StopTime                 48.0
+pfset Geom.domain.ICPressure.FileName        LW.out.press.00019.pfb
+pfdist LW.out.press.00019.pfb
+pfset Solver.CLM.IstepStart                           20
+```
+Also in `drv_clmin.dat` you should change:
+```
+startcode 	1
+clm_ic  	1
+```
 Look at your outputs again. Don’t forget that you will need to change the number of time steps in the water balance and flow scripts.  You can ensure that you did the restart correctly by checking that the solution for the overlap period (i.e. hours 19-24) is the same for the first run and the restart run.
 
-Additional Tests
-Experiment with the model and outputs. Here are some suggestions:
-•	Restart again and/or experiment with changing the CLM restart settings (Note that forcings are available up to hour 72)
-•	Change the processor topology
-•	Change the time step
-•	Add additional variables to your water balance
-•	Look at the forcing variables
-•	Run again on BlueM
+###### Additional Tests to Run:
+-	Restart again and/or experiment with changing the CLM restart settings (Note that forcings are available up to hour 72)
+- Change the processor topology
+- Change the time step
+- Add additional variables to your water balance
+- Look at the forcing variables
