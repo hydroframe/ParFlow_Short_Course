@@ -11,4 +11,4 @@ Each of these examples simulates a different runoff mechanism over a simple hill
 
 + Each case can be run by typing, e.g., `tclsh 1-d.overland.tcl` from the /overland directory level
 + Each case generates the outflow from the domain as output for plotting.  This can be copied and pasted into a worksheet or piped into a text file for plotting in a script-based framework (e.g. Python, R, etc).
-+  Run the cases in order, starting with the 1-d.overland.tcl case, then plot, manipulate the inputs to experiment.
++ To work the exercise, refer to the instructions in `How-To-Overland.md` which will walk you through running the cases and manipulating the inputs to experiment.
