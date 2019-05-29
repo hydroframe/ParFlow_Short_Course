@@ -24,7 +24,7 @@ Tcl scripts for common pre and post processing steps used in the exercises.
 1. Slopes (`LW.slopex` & `LW.slopey`): Slopes in the x and y directions calculated from the dem.
 2. subsurface Indicator File (`IndicatorFile_Gleeson.50z`): An indicator file for the subsurface geology.
 3. Initial Pressure (`press.init`): A pressure file that reflects an initialized groundwater configuration (see **Exercise 2**). This is only required if you want to start your run for this initial condition.
-4. Land Surface Elevations (`LW.dem`): Gridded elevation values.  Note this is only used for visualizing outputs and is not used direclty in the model.
+4. Land Surface Elevations (`LW.dem`): Gridded elevation values.  Note this is only used for visualizing outputs and is not used directly in the model.
 
 File types:  Files are provided in both ParFlow formatted *.sa* files and *.pfb* files. Refer to `PrePost_Processing\File_Conversion.tcl` for and example of converting between *.sa*, *.pfb* and *.silo* files using pftools.
 
@@ -43,8 +43,7 @@ File types: Forcings are provided in both ParFlow formatted *.sa* files and *.pf
 
 Variables:
 - APCP: Precipitation rate [mm/s]
-- DLWR: Downward long wave radiation [W/m2
-]
+- DLWR: Downward long wave radiation [W/m2]
 - DSWR: Downward short wave radiation [W/m2]
 - Press: Atmospheric pressure [pa]
 - SPFH: Water vapor specific humidity [kg/kg]
@@ -173,17 +172,17 @@ tclsh LW_Exercise4.tcl
 7. *Restarting*:
 No we will try restarting a ParFlow-CLM run from where the run from Step 4 ended.  Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the `LW_Exercise4.tcl` script:
 ```
-TimingInfo.StartCount               19.0
+TimingInfo.StartCount                     19.0
 pfset TimingInfo.StartTime                19.0
 pfset TimingInfo.StopTime                 48.0
-pfset Geom.domain.ICPressure.FileName        LW.out.press.00019.pfb
-pfdist LW.out.press.00019.pfb
-pfset Solver.CLM.IstepStart                           20
+pfset Geom.domain.ICPressure.FileName     LW.out.press.00019.pfb
+pfdist                                    LW.out.press.00019.pfb
+pfset Solver.CLM.IstepStart               20
 ```
 Also in `drv_clmin.dat` you should change:
 ```
 startcode 	1
-clm_ic  	1
+clm_ic  	  1
 ```
 Look at your outputs again. Don’t forget that you will need to change the number of time steps in the water balance and flow scripts.  You can ensure that you did the restart correctly by checking that the solution for the overlap period (i.e. hours 19-24) is the same for the first run and the restart run.
 
