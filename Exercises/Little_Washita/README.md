@@ -171,7 +171,7 @@ tclsh LW_Exercise4.tcl
 6.	Make VTKs out of the outputs using `PrePost_Processing/VTK_example.tcl` and experiment with visualizations in Visit
 
 7. *Restarting*:
-No we will try restarting a ParFlow-CLM run from where the run from Step 4 ended.  Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the `LW_Exercise4.tcl` script:
+Now we will try restarting a ParFlow-CLM run from where the run from Step 4 ended.  Note that because we are using the DailyRST flag, CLM only writes an output file once per day at midnight GMT.  This run started at midnight central time so the clm restart file will be written at hour 19.  Therefore, even though we ran for 24 hours we will need to roll back and restart at the last restart file. You can also see the restart time in clm_restart.tcl. To restart and run for another 24 hours you will need to change the following settings in the `LW_Exercise4.tcl` script:
 ```
 TimingInfo.StartCount                     19.0
 pfset TimingInfo.StartTime                19.0
