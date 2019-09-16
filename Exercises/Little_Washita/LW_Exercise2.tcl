@@ -10,10 +10,10 @@ pfset     FileVersion    4
 #-----------------------------------------------------------------------------
 # Setup run name and location
 #-----------------------------------------------------------------------------
-file mkdir Exercise2
-cd Exercise2
-set runname "LW_ParkingLot"
-pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb 
+set runname "LW_CLM_Ex2"
+file mkdir $runname
+cd $runname
+pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb
 
 #-----------------------------------------------------------------------------
 # Set Processor topology
@@ -292,13 +292,9 @@ pfset Solver.WriteSiloSlopes      					  True
 #-----------------------------------------------------------------------------
 # Distribute inputs
 #-----------------------------------------------------------------------------
-pfset ComputationalGrid.NX                41
-pfset ComputationalGrid.NY                41
-pfset ComputationalGrid.NZ                1
-pfdist ../parflow_input/LW.slopex.pfb
-pfdist ../parflow_input/LW.slopey.pfb
+pfdist -nz 1 ../parflow_input/LW.slopex.pfb
+pfdist -nz 1 ../parflow_input/LW.slopey.pfb
 
-pfset ComputationalGrid.NZ                50
 
 
 #-----------------------------------------------------------------------------

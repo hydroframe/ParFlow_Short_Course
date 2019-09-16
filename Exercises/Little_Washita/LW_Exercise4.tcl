@@ -19,10 +19,10 @@ pfset Process.Topology.R 1
 #-----------------------------------------------------------------------------
 # Setup run name and location
 #-----------------------------------------------------------------------------
-file mkdir Exercise4
-cd Exercise4
-set runname "LW_CLM"
-pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb 
+set runname "LW_CLM_Ex4"
+file mkdir $runname
+cd $runname
+pfset TopoSlopes.Elevation.FileName ../parflow_input/LW.dem.pfb
 
 #-----------------------------------------------------------------------------
 # Make a directory for the simulation and copy inputs into it
@@ -430,6 +430,9 @@ pfset Solver.CLM.WiltingPoint                         0.12
 pfset Solver.CLM.FieldCapacity                        0.98
 pfset Solver.CLM.IrrigationType                       none
 
+pfset Solver.CLM.RootZoneNZ                           10
+pfset Solver.CLM.SoiLayer                             7
+
 #---------------------------------------------------------
 # Initial conditions: water pressure
 #---------------------------------------------------------
@@ -504,15 +507,8 @@ pfset Solver.Linear.Preconditioner.PCMatrixType     FullJacobian
 #-----------------------------------------------------------------------------
 # Distribute inputs
 #-----------------------------------------------------------------------------
-pfset ComputationalGrid.NX                41
-pfset ComputationalGrid.NY                41
-pfset ComputationalGrid.NZ                1
-pfdist LW.slopex.pfb
-pfdist LW.slopey.pfb
-
-pfset ComputationalGrid.NX                41
-pfset ComputationalGrid.NY                41
-pfset ComputationalGrid.NZ                50
+pfdist -nz 1 LW.slopex.pfb
+pfdist -nz 1 LW.slopey.pfb
 pfdist IndicatorFile_Gleeson.50z.pfb
 pfdist press.init.pfb
 
